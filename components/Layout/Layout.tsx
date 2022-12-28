@@ -1,13 +1,13 @@
-import breakPoints from '../helpers/breakPoints';
+// import breakPoints from '../helpers/breakPoints';
 import {Header} from "../Header/Header";
 
 export function Layout({children}:{children:any}) {
 
-    const screen = breakPoints();
-    const isMobile = screen === 'desktop';
+    // const screen = breakPoints();
+    // const isMobile = screen === 'desktop';
 
     return (
-            <main>
+            <main >
                <Header/>
                 {children}
             </main>

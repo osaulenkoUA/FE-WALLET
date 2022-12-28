@@ -41,6 +41,18 @@ module.exports = {
                 blackRBGA: 'rgba(255,255,255,0.8)',
                 charcoalBlackA80: 'rgba(20,19,17, 0.8)'
             },
+            margin:{
+                'auto':'0 auto'
+            },
+            screens: {
+                'lg':'1024px',
+                '2xl': '1440px',
+                '3xl': '1536px',
+                xs: '319px',
+                lgToXl: { min: '1024px', max: '1440px' },
+                lg2ToXl: { min: '1280px', max: '1440px' },
+                xlToXXl: { min: '1440px', max: '1500px' }
+            }
 
         },
     },

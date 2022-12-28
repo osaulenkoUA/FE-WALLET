@@ -1,36 +1,26 @@
-import breakPoints from '../helpers/breakPoints';
-import {useEffect} from "react";
-import axios from "axios";
-import {fetchCategories} from '../helpers/endpoints'
+// import breakPoints from '../helpers/breakPoints';
+import Link from 'next/link'
 
+export interface ICategory {
+    category: string
+    _id: string
+    description?: [string]
+}
 
 export function Header() {
 
-    const screen = breakPoints();
-    const isMobile = screen === 'desktop';
-
-    const getCategories = async () => {
-        try {
-            const items = JSON.parse(localStorage.getItem('categories') || '[]');
-            if (!!items.length) {
-                return;
-            }
-            const {data} = await axios.get(fetchCategories)
-            localStorage.setItem('categories', JSON.stringify(data));
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    useEffect(() => {
-        getCategories();
-
-    }, [])
+    // const screen = breakPoints();
+    // const isMobile = screen === 'desktop';
 
 
     return (
-        <>
-            <p className={'text-center'}>header</p>
-        </>
+        <div className={'w-full h-[40px] bg-amber-500 flex gap-8 items-center justify-center'}>
+
+            <Link className={'text-white font-bold'} href={'/'}> Добавити </Link>
+            <Link className={'text-white font-bold'} href={'/'}> Витрати </Link>
+            <Link className={'text-white font-bold'} href={'/settings'}> Налаштування </Link>
+
+
+        </div>
     );
 }
