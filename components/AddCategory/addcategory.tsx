@@ -3,6 +3,7 @@ import {IconAdd} from "../assets/Icons/icon-add";
 import {IconRemove} from "../assets/Icons/icon-remove";
 import axios from "axios";
 import {addCategories} from "../helpers/endpoints";
+import {Spinner} from "../Spinner/Spinner";
 
 export default function Addcategory() {
 
@@ -88,7 +89,7 @@ export default function Addcategory() {
                     ))}
                 </div>
 
-            </div> : <div className={'text-4xl'}>Loading....</div>
+            </div> : <Spinner/>
             }
         </>
     )

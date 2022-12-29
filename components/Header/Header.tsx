@@ -1,4 +1,3 @@
-// import breakPoints from '../helpers/breakPoints';
 import Link from 'next/link'
 
 export interface ICategory {
@@ -9,11 +8,7 @@ export interface ICategory {
 
 export function Header() {
 
-    // const screen = breakPoints();
-    // const isMobile = screen === 'desktop';
-
-
-    return (
+     return (
         <div className={'w-full h-[40px] bg-amber-500 flex gap-8 items-center justify-center'}>
 
             <Link className={'text-white font-bold'} href={'/'}> Добавити </Link>

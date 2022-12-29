@@ -1,0 +1,98 @@
+import React, {useEffect, useRef, useState} from "react";
+import {ICategory} from "../Header/Header";
+import {CategoryItem} from "./CategoryItem";
+import axios from "axios";
+import {addTransaction} from "../helpers/endpoints";
+import {IconAdd} from "../assets/Icons/icon-add";
+import {Spinner} from "../Spinner/Spinner";
+
+export default function AddFinance({items}: { items: ICategory[] }) {
+
+    const [loading, setLoading] = useState(false);
+    const [chosenDescription, setChosenDescription] = useState('');
+    const inputEl = useRef(null);
+    const [description, setDescription] = useState(chosenDescription);
+    const [amount, setAmount] = useState('');
+    const [category, setCategory] = useState('');
+
+    useEffect(() => {
+        setDescription(chosenDescription)
+        // @ts-ignore
+        chosenDescription && inputEl!.current!.focus()
+    }, [chosenDescription]);
+
+
+    const onHandleSubmit = async () => {
+        setLoading(true)
+        try {
+             await axios.post(addTransaction, {
+                category: category,
+                ...(description ? {description: description} : {description: 'Інше'}),
+                amount: +amount!
+            })
+
+            setDescription('');
+            setAmount('');
+            setChosenDescription('')
+            setLoading(false)
+        } catch (err) {
+            setLoading(false)
+            console.log(err)
+        }
+    }
+
+    const handleClickCategory = (cat: string) => {
+        setCategory(cat)
+        setChosenDescription('')
+        setAmount('')
+    }
+
+    const onHandleAddAmount = (e: any) => {
+        if (e.target.value === '0') return
+        setAmount(e.target?.value)
+    }
+    const onHandleChangeDescrip = (e: any) => setDescription(e.target?.value)
+
+    return (
+        <div>
+            {!loading ? (
+                <div className={'grid grid-cols-1 lg:grid-cols-3'}>
+                    {items.map(c => (
+                        <div className={'mb-2'} key={c._id}>
+                            <p onClick={() => handleClickCategory(c.category)}
+                               className={'text-white w-full bg-green p-3 text-[18px] font-bold rounded-2xl'}>{c?.category}</p>
+                            {category === c?.category &&
+                                <>
+                                    <CategoryItem chosenDescription={chosenDescription}
+                                                  setChosenDescription={setChosenDescription}
+                                                  descriptions={c?.description}/>
+
+
+                                    <div className={'flex gap-2 items-center mt-2 h-[30px]'}>
+                                        <label className={'flex flex-col text-sm w-full'}>
+                                            <input onChange={onHandleChangeDescrip} value={description}
+                                                   className={'border-2'}/>
+                                        </label>
+                                        <label className={'flex w-[50px] flex-col text-sm'}>
+                                            <input type={'number'} ref={inputEl} onChange={onHandleAddAmount}
+                                                   value={amount}
+                                                   className={'border-2'}/>
+                                        </label>
+                                        <button disabled={!(!!amount)} onClick={onHandleSubmit}>
+                                            {amount ? <IconAdd/> : <div className={'w-[30px] h-[30px]'}/>}
+                                        </button>
+                                    </div>
+
+                                </>
+
+
+                            }
+
+
+                        </div>
+                    ))}
+                </div>
+            ) : <Spinner/>}
+        </div>
+    )
+}

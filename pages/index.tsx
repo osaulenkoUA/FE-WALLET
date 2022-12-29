@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {ICategory} from "../components/Header/Header";
 import axios from "axios";
 import {fetchCategories} from "../components/helpers/endpoints";
+import AddFinance from "../components/AddFinance/AddFinance";
 
 
 export default function Home() {
@@ -30,15 +31,7 @@ export default function Home() {
     console.log(items)
     return (
         <section className={'p-[16px]'}>
-            <h2 className={'text-4xl text-green'}>BODY</h2>
-           <div className={'grid grid-cols-1 lg:grid-cols-3'}>
-               {items.map(c=>(
-                   <div key={c._id}>
-                       <p className={'text-green'}>{c?.category}</p>
-                       {c?.description?.map(d=><p key={d}>{d}</p>)}
-                   </div>
-               ))}
-           </div>
+           <AddFinance items={items}/>
         </section>
     )
 }
