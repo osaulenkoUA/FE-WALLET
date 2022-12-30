@@ -28,7 +28,6 @@ export default function Home() {
     useEffect(() => {
         getCategories();
     }, [])
-    console.log(items)
     return (
         <section className={'p-[16px]'}>
            <AddFinance items={items}/>

@@ -61,13 +61,13 @@ export default function Addcategory() {
         <>
             {!loading ? <div className={'flex flex-col'}>
                 <label className={'flex flex-col mb-4 text-sm'}>
-                    Category
+                    Категорія
                     <input value={cat} onChange={onHandleAdd} className={'border-2'}/>
                 </label>
 
                 <div className={'flex items-center justify-between'}>
                     <label className={'flex flex-col mb-4 text-sm w-full'}>
-                        Description
+                        Опис
                         <input value={desc} onChange={onHandleAddDescrip} className={'border-2'}/>
                     </label>
                     {desc && <div onClick={onHandleAddDescripToArray}>

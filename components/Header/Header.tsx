@@ -12,7 +12,7 @@ export function Header() {
         <div className={'w-full h-[40px] bg-amber-500 flex gap-8 items-center justify-center'}>
 
             <Link className={'text-white font-bold'} href={'/'}> Добавити </Link>
-            <Link className={'text-white font-bold'} href={'/'}> Витрати </Link>
+            <Link className={'text-white font-bold'} href={'/analyze'}> Витрати </Link>
             <Link className={'text-white font-bold'} href={'/settings'}> Налаштування </Link>
 
 
