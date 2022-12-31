@@ -2,6 +2,8 @@ import axios from "axios";
 import {fetchFinances} from "../../components/helpers/endpoints";
 import React, {useEffect, useState} from "react";
 import {ICategory} from "../../components/Header/Header";
+import date from 'date-and-time';
+import clsx from "clsx";
 
 export interface IFinnanceItem {
     _id: string
@@ -19,6 +21,9 @@ export default function Analyze() {
     const [categoryies, setCategoryies] = useState<ICategory[]>([]);
 
     const [category, setCategory] = useState('');
+
+    const [showDate, setShowDate] = useState(true);
+
 
     const getFinances = async () => {
         try {
@@ -55,6 +60,10 @@ export default function Analyze() {
 
         <>
             <div className={'p-[16px]'}>
+                <label className={'text-[12px] flex items-center justify-end mb-2'}>
+                     Показувати дату операцій
+                    <input onChange={()=>setShowDate(!showDate)} type={'checkbox'} className={'ml-2'}/>
+                </label>
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
                     {categoryies.map(c => (
                         <div className={'mb-2'} key={c._id}>
@@ -64,9 +73,10 @@ export default function Analyze() {
 
 
                                 {getItemsByCategory(c.category).map(el => (
-                                    <div className={'flex justify-between items-center'} key={el._id}>
+                                    <div className={clsx(!showDate&&'grid-cols-col2',showDate&&'grid-cols-col3','grid items-center gap-4')} key={el._id}>
                                         <p>{el.description}</p>
-                                        <p>{el.amount}</p>
+                                        {showDate&& <p>{el.date.slice(0,5)}</p>}
+                                        <p className={'justify-self-end'}>{el.amount}</p>
                                     </div>
                                 ))}
 

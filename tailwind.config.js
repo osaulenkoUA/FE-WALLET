@@ -44,6 +44,11 @@ module.exports = {
             margin:{
                 'auto':'0 auto'
             },
+            gridTemplateColumns:{
+                'col3':'1fr max-content 40px',
+                'col2':'1fr 40px'
+
+            },
             screens: {
                 'lg':'1024px',
                 '2xl': '1440px',
