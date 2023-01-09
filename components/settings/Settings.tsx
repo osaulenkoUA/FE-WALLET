@@ -1,12 +1,12 @@
 import {useState} from "react";
-import Addcategory from "../../components/AddCategory/addcategory";
-import UpdateCategory from "../../components/UpdateCategory/updateCategory";
+import Addcategory from "../AddCategory/addcategory";
+import UpdateCategory from "../UpdateCategory/updateCategory";
 import axios from "axios";
-import {fetchCategories} from "../../components/helpers/endpoints";
-import {Spinner} from "../../components/Spinner/Spinner";
+import {fetchCategories} from "../helpers/endpoints";
+import {Spinner} from "../Spinner/Spinner";
 
 
-export default function Settings() {
+export const Settings = () => {
 
     const [activeTab, setActiveTab] = useState('0');
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,7 @@ export default function Settings() {
             <div className={'flex gap-4 mb-[20px] border-b-2 pb-1'}>
                 <button onClick={() => setActiveTab('0')}>Добавити категорію</button>
                 <button onClick={() => setActiveTab('1')}>Добавити опис</button>
-                <button onClick={() => getCategories() }>Оновити список категорій</button>
+                <button onClick={() => getCategories()}>Оновити список категорій</button>
                 {loading && <Spinner/>}
             </div>
             {activeTab === '0' && <Addcategory/>}

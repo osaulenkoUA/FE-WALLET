@@ -8,7 +8,6 @@ export function Layout({children}:{children:any}) {
 
     return (
             <main >
-               <Header/>
                 {children}
             </main>
     );

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
-import {ICategory} from "../Header/Header";
+import {ICategory} from "../../pages";
 import {CategoryItem} from "./CategoryItem";
 import axios from "axios";
 import {addTransaction} from "../helpers/endpoints";
@@ -54,7 +54,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     const onHandleChangeDescrip = (e: any) => setDescription(e.target?.value)
 
     return (
-        <div>
+        <div className={'p-4 pt-[42px]'}>
             {!loading ? (
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
                     {items.map(c => (

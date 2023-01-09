@@ -1,13 +1,21 @@
 import {useEffect, useState} from "react";
-import {ICategory} from "../components/Header/Header";
 import axios from "axios";
 import {fetchCategories} from "../components/helpers/endpoints";
 import AddFinance from "../components/AddFinance/AddFinance";
+import {Analyze} from "../components/analyze/Analyze";
+import {Settings} from "../components/settings/Settings";
 
-
+export interface ICategory {
+    category: string
+    _id: string
+    description?: [string]
+}
 export default function Home() {
 
     const [items, setItems] = useState<ICategory[]>([]);
+
+    const [activeTab, setActiveTab] = useState('0');
+    const [loading, setLoading] = useState(false);
 
 
     const getCategories = async () => {
@@ -30,7 +38,22 @@ export default function Home() {
     }, [])
     return (
         <section className={'p-[16px]'}>
-           <AddFinance items={items}/>
+
+            <div className={'w-full h-[40px] bg-amber-500 flex gap-8 items-center justify-center'}>
+
+                <div className={'text-white font-bold cursor-pointer'} onClick={() => setActiveTab('0')}> Добавити</div>
+                <div className={'text-white font-bold cursor-pointer'} onClick={() => setActiveTab('1')}> Аналіз</div>
+                <div className={'text-white font-bold cursor-pointer'} onClick={() => setActiveTab('2')}> Налаштування
+                </div>
+
+
+            </div>
+
+            {activeTab === '0' && <AddFinance items={items}/>}
+            {activeTab === '1' && <Analyze/>}
+            {activeTab === '2' && <Settings/>}
+
+
         </section>
     )
 }

@@ -1,9 +1,9 @@
 import axios from "axios";
-import {fetchFinances} from "../../components/helpers/endpoints";
+import {fetchFinances} from "../helpers/endpoints";
 import React, {useEffect, useState} from "react";
-import {ICategory} from "../../components/Header/Header";
-import date from 'date-and-time';
+import {ICategory} from "../../pages";
 import clsx from "clsx";
+import {Spinner} from "../Spinner/Spinner";
 
 export interface IFinnanceItem {
     _id: string
@@ -15,23 +15,26 @@ export interface IFinnanceItem {
 }
 
 
-export default function Analyze() {
+export const Analyze = () => {
 
     const [items, setItems] = useState<IFinnanceItem[]>([]);
     const [categoryies, setCategoryies] = useState<ICategory[]>([]);
+    const [loading, setLoading] = useState(false);
 
     const [category, setCategory] = useState('');
 
-    const [showDate, setShowDate] = useState(true);
+    const [showDate, setShowDate] = useState(false);
 
 
     const getFinances = async () => {
+        setLoading(true)
         try {
             const {data} = await axios.get(fetchFinances)
-
             setItems(data)
+            setLoading(false)
         } catch (err) {
             console.log(err)
+            setLoading(false)
         }
     }
 
@@ -43,7 +46,6 @@ export default function Analyze() {
 
     const handleClickCategory = (cat: string) => {
         setCategory(cat)
-
     }
 
     const getItemsByCategory = (category: string) => {
@@ -58,11 +60,11 @@ export default function Analyze() {
 
     return (
 
-        <>
-            <div className={'p-[16px]'}>
+        <div>
+            {!loading && <div className={'p-[16px]'}>
                 <label className={'text-[12px] flex items-center justify-end mb-2'}>
-                     Показувати дату операцій
-                    <input onChange={()=>setShowDate(!showDate)} type={'checkbox'} className={'ml-2'}/>
+                    Показувати дату операцій
+                    <input onChange={() => setShowDate(!showDate)} type={'checkbox'} className={'ml-2'}/>
                 </label>
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
                     {categoryies.map(c => (
@@ -73,9 +75,11 @@ export default function Analyze() {
 
 
                                 {getItemsByCategory(c.category).map(el => (
-                                    <div className={clsx(!showDate&&'grid-cols-col2',showDate&&'grid-cols-col3','grid items-center gap-4')} key={el._id}>
+                                    <div
+                                        className={clsx(!showDate && 'grid-cols-col2', showDate && 'grid-cols-col3', 'grid items-center gap-4')}
+                                        key={el._id}>
                                         <p>{el.description}</p>
-                                        {showDate&& <p>{el.date.slice(0,5)}</p>}
+                                        {showDate && <p>{el.date.slice(0, 5)}</p>}
                                         <p className={'justify-self-end'}>{el.amount}</p>
                                     </div>
                                 ))}
@@ -93,8 +97,8 @@ export default function Analyze() {
                 </div>
 
 
-            </div>
-
-        </>
+            </div>}
+            {loading && <Spinner/>}
+        </div>
     )
 }
