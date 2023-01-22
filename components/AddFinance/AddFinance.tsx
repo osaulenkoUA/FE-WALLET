@@ -5,6 +5,8 @@ import axios from "axios";
 import {addTransaction} from "../helpers/endpoints";
 import {IconAdd} from "../assets/Icons/icon-add";
 import {Spinner} from "../Spinner/Spinner";
+import {toast, ToastContainer, ToastOptions} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function AddFinance({items}: { items: ICategory[] }) {
 
@@ -14,6 +16,17 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     const [description, setDescription] = useState(chosenDescription);
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('');
+
+    const notifyOpt: ToastOptions = {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+    };
 
     useEffect(() => {
         setDescription(chosenDescription)
@@ -25,20 +38,21 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     const onHandleSubmit = async () => {
         setLoading(true)
         try {
-             const fetch = await axios.post(addTransaction, {
+            const fetch = await axios.post(addTransaction, {
                 category: category,
                 ...(description ? {description: description} : {description: 'Інше'}),
                 amount: +amount!
             })
-
-
-            console.log(fetch)
-
-            setDescription('');
-            setAmount('');
-            setChosenDescription('')
-            setLoading(false)
+            if (fetch?.status === 201) {
+                toast.success('ДОДАНО !!!', notifyOpt);
+                setDescription('');
+                setAmount('');
+                setChosenDescription('')
+                setLoading(false)
+                return;
+            }
         } catch (err) {
+            toast.error('ERROR, спробуй ще (', notifyOpt);
             setLoading(false)
             console.log(err)
         }
@@ -65,28 +79,28 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                             <p onClick={() => handleClickCategory(c.category)}
                                className={'text-white w-full bg-green p-3 text-[18px] font-bold rounded-2xl'}>{c?.category}</p>
                             {category === c?.category &&
-                                <>
-                                    <CategoryItem chosenDescription={chosenDescription}
-                                                  setChosenDescription={setChosenDescription}
-                                                  descriptions={c?.description}/>
+                              <>
+                                <CategoryItem chosenDescription={chosenDescription}
+                                              setChosenDescription={setChosenDescription}
+                                              descriptions={c?.description}/>
 
 
-                                    <div className={'flex gap-2 items-center mt-2 h-[30px]'}>
-                                        <label className={'flex flex-col text-sm w-full'}>
-                                            <input onChange={onHandleChangeDescrip} value={description}
-                                                   className={'border-2'}/>
-                                        </label>
-                                        <label className={'flex w-[50px] flex-col text-sm'}>
-                                            <input type={'number'} ref={inputEl} onChange={onHandleAddAmount}
-                                                   value={amount}
-                                                   className={'border-2'}/>
-                                        </label>
-                                        <button disabled={!(!!amount)} onClick={onHandleSubmit}>
-                                            {amount ? <IconAdd/> : <div className={'w-[30px] h-[30px]'}/>}
-                                        </button>
-                                    </div>
+                                <div className={'flex gap-2 items-center mt-2 h-[30px]'}>
+                                  <label className={'flex flex-col text-sm w-full'}>
+                                    <input onChange={onHandleChangeDescrip} value={description}
+                                           className={'border-2'}/>
+                                  </label>
+                                  <label className={'flex w-[50px] flex-col text-sm'}>
+                                    <input type={'number'} ref={inputEl} onChange={onHandleAddAmount}
+                                           value={amount}
+                                           className={'border-2'}/>
+                                  </label>
+                                  <button disabled={!(!!amount)} onClick={onHandleSubmit}>
+                                      {amount ? <IconAdd/> : <div className={'w-[30px] h-[30px]'}/>}
+                                  </button>
+                                </div>
 
-                                </>
+                              </>
 
 
                             }
@@ -96,6 +110,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                     ))}
                 </div>
             ) : <Spinner/>}
+            <ToastContainer/>
         </div>
     )
 }
