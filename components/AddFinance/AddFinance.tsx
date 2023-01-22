@@ -25,11 +25,14 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     const onHandleSubmit = async () => {
         setLoading(true)
         try {
-             await axios.post(addTransaction, {
+             const fetch = await axios.post(addTransaction, {
                 category: category,
                 ...(description ? {description: description} : {description: 'Інше'}),
                 amount: +amount!
             })
+
+
+            console.log(fetch)
 
             setDescription('');
             setAmount('');
