@@ -156,7 +156,7 @@ export const Analyze = () => {
                                                 <IconConfirm/></div>}
 
                                             {isEdit !== el._id ? <p>{el.description}</p> :
-                                                <input className={'border pl-2 border-blue-600'} ref={descriptionRef}
+                                                <input className={' border pl-2 border-blue-600'} ref={descriptionRef}
                                                        onChange={(e) => setDescription(e.target.value)}
                                                        value={description} type={'text'}/>}
 
@@ -165,7 +165,7 @@ export const Analyze = () => {
                                         {showDate && <p>{el.date.slice(0, 5)}</p>}
                                         {isEdit !== el._id ? <p className={'justify-self-end'}>{el.amount}</p> :
                                             <input onChange={(e) => setAmount(+e.target.value)}
-                                                   className={'border pl-2 border-blue-600'}
+                                                   className={'w-[50px] border pl-2 border-blue-600'}
                                                    type={'number'} value={amount}/>}
                                     </div>
                                 ))}
