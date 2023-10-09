@@ -1,1 +1,1 @@
-export default function Index() {    return (        <>        <a href="#">            <span>Search</span>        </a>        </>    )}
+export default function Index() {    return (        <>        <a href="#">            <span></span>        </a>        </>    )}
