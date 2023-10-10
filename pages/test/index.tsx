@@ -1,1 +1,1 @@
-export default function Index() {    return (        <>        <a href="#">            <span className={"visually-hidden"}>Search 111</span>        </a>        </>    )}
+export default function Index() {    return (        <>        <a href="#">            <span className={"visually-hidden"}>Search 111</span>        </a>            <a className="js-searchbar-btn" href="#">                <span className="icon-search"></span>                <span className="visually-hidden">search</span>            </a>        </>    )}
