@@ -116,11 +116,7 @@ export const Analyze = () => {
                     <p className={'cursor-pointer text-[12px]'}
                        onClick={() => setCurrentMonth(+date.format(new Date(), 'M'))}>Current Month
                         - <b>{date.transform('0' + currentMonth, 'MM', 'MMMM')}</b></p>
-                    <label className={'text-[12px] flex items-center justify-end '}>
-                        Показувати дату операцій
-                        <input checked={showDate} onChange={() => setShowDate(!showDate)} type={'checkbox'}
-                               className={'ml-2'}/>
-                    </label>
+
                 </div>
 
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
@@ -139,7 +135,7 @@ export const Analyze = () => {
                             </div>
 
                             {category === c.category && <div>
-                                {getItemsByCategory(c.category).map(el => (
+                                {getItemsByCategory(c.category).reverse().map(el => (
                                     <div
                                         className={clsx(!showDate && 'grid-cols-col2', showDate && 'grid-cols-col3', 'grid items-center gap-4 mb-1')}
                                         key={el._id}>
@@ -162,7 +158,7 @@ export const Analyze = () => {
 
                                         </div>
 
-                                        {showDate && <p>{el.date.slice(0, 5)}</p>}
+                                         <p>{el.date.slice(0, 5)}</p>
                                         {isEdit !== el._id ? <p className={'justify-self-end'}>{el.amount}</p> :
                                             <input onChange={(e) => setAmount(+e.target.value)}
                                                    className={'w-[50px] border pl-2 border-blue-600'}

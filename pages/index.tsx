@@ -14,8 +14,6 @@ export default function Home() {
 
     const [items, setItems] = useState<ICategory[]>([]);
     const [activeTab, setActiveTab] = useState('0');
-    const [loading, setLoading] = useState(false);
-
 
     const getCategories = async () => {
         try {
