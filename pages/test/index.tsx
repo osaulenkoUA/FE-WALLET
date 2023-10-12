@@ -1,1 +1,1 @@
-export default function Index() {    return (        <>        <h1 className={'test'}>TEST</h1>        </>    )}
+export default function Index() {    return (        <>        <a href={'#'} className={'test'}>test</a>        </>    )}
