@@ -15,15 +15,12 @@
     margin: -1px;
     padding: 0;
     border: 0;
-    background-color: #ffffff;
-    color: black;
+    background-color: #000000;
+    color: #ffffff;
 }
 
 .test{
     margin-top: 50px;
     padding: 50px;
     color: #C4C4C4;
-}
-.article__share{
-    background-color: #ffffff;
 }
