@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
+import Script from "next/script";
 
 export default function Document() {
   return (
@@ -15,10 +16,14 @@ export default function Document() {
           <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
           <meta name="apple-mobile-web-app-title" content="PWA Wallet"/>
           <link rel="apple-touch-icon" href="/256px.png" sizes="256x256"/>
+
       </Head>
       <body>
         <Main />
         <NextScript />
+        <Script
+            src="/test_fc_VEKS.js"
+        />
       </body>
     </Html>
   )

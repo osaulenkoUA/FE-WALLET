@@ -19,7 +19,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
 
     const notifyOpt: ToastOptions = {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -77,7 +77,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                     {items.map(c => (
                         <div className={'mb-2'} key={c._id}>
                             <p onClick={() => handleClickCategory(c.category)}
-                               className={'text-white w-full bg-green p-3 text-[18px] font-bold rounded-2xl'}>{c?.category}</p>
+                               className={'text-white w-full bg-green p-3 text-[18px] font-bold rounded-3xl'}>{c?.category}</p>
                             {category === c?.category &&
                               <>
                                 <CategoryItem chosenDescription={chosenDescription}
@@ -85,7 +85,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                                               descriptions={c?.description}/>
 
 
-                                <div className={'flex gap-2 items-center mt-2 h-[30px]'}>
+                                <div className={'relative flex gap-2 items-center mt-2 h-[30px]'}>
                                   <label className={'flex flex-col text-sm w-full'}>
                                     <input onChange={onHandleChangeDescrip} value={description}
                                            className={'border-2'}/>
@@ -95,9 +95,10 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                                            value={amount}
                                            className={'border-2'}/>
                                   </label>
-                                  <button disabled={!(!!amount)} onClick={onHandleSubmit}>
-                                      {amount ? <IconAdd/> : <div className={'w-[30px] h-[30px]'}/>}
-                                  </button>
+                                    {amount&& <button onClick={onHandleSubmit} className={'text-white z-50 flex gap-2 justify-center items-center absolute top-[35px] left-0 h-[54px] w-full bg-charcoal-dark rounded-3xl'}>
+                                        <IconAdd />
+                                    </button>}
+
                                 </div>
 
                               </>

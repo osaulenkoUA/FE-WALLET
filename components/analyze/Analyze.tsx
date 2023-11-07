@@ -32,7 +32,7 @@ export const Analyze = () => {
     const [isEdit, setIsEdit] = useState('');
 
     const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState(0);
+    const [amount, setAmount] = useState<string|number>(0);
 
     const getFinances = async () => {
         setLoading(true)
@@ -50,7 +50,7 @@ export const Analyze = () => {
 
     const updateFields = async (item: IFinnanceItem) => {
 
-        if (description === item.description && amount === item.amount) {
+        if (description === item.description && +amount === item.amount) {
             setIsEdit('');
             return;
         }
@@ -59,7 +59,7 @@ export const Analyze = () => {
             const data = await axios.put(updateItem, {
                 id: item._id,
                 ...(description !== item.description && {description: description}),
-                ...(amount !== item.amount && {amount: amount}),
+                ...(+amount !== item.amount && {amount: +amount}),
             })
             if (data.status === 202) {
                 setIsEdit('')
@@ -160,7 +160,9 @@ export const Analyze = () => {
 
                                          <p>{el.date.slice(0, 5)}</p>
                                         {isEdit !== el._id ? <p className={'justify-self-end'}>{el.amount}</p> :
-                                            <input onChange={(e) => setAmount(+e.target.value)}
+                                            <input onChange={(e) => {
+                                                setAmount(e.target.value)
+                                            }}
                                                    className={'w-[50px] border pl-2 border-blue-600'}
                                                    type={'number'} value={amount}/>}
                                     </div>
