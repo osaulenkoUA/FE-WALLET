@@ -7,6 +7,7 @@ import axios from "axios";
 import {getOperationdByMonth, updateItem} from "../helpers/endpoints";
 import {IconEdit} from "../assets/Icons/icon-edit";
 import {IconConfirm} from "../assets/Icons/icon-ok";
+import {isSingleDigit} from "../helpers/checkNumbers";
 
 export interface IFinnanceItem {
     _id: string
@@ -114,9 +115,8 @@ export const Analyze = () => {
                     }
                     }>Previous Month</p>
                     <p className={'cursor-pointer text-[12px]'}
-                       onClick={() => setCurrentMonth(+date.format(new Date(), 'M'))}>Current Month
-                        - <b>{date.transform('0' + currentMonth, 'MM', 'MMMM')}</b></p>
-
+                       onClick={() => setCurrentMonth(+date.format(new Date(), 'M'))}>Поточний Місяць
+                        - <b>{date.transform(isSingleDigit(currentMonth)?'0':'' + currentMonth.toString(), 'MM', 'MMMM')}</b></p>
                 </div>
 
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
