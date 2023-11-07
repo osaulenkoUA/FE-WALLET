@@ -34,7 +34,7 @@ export default function Home() {
         getCategories();
     }, [])
     return (
-        <section className={'p-[16px]'}>
+        <section>
 
             <div className={'w-full h-[40px] bg-amber-500 flex gap-8 items-center justify-center'}>
 
