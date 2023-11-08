@@ -3,7 +3,7 @@ import {ICategory} from "../../pages";
 import {CategoryItem} from "./CategoryItem";
 import axios from "axios";
 import {addTransaction} from "../helpers/endpoints";
-import {IconAdd} from "../assets/Icons/icon-add";
+import {IconCARD, IconCash} from "../assets/Icons/icon-add";
 import {Spinner} from "../Spinner/Spinner";
 import {toast, ToastContainer, ToastOptions} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -35,13 +35,14 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     }, [chosenDescription]);
 
 
-    const onHandleSubmit = async () => {
+    const onHandleSubmit = async (payMethod:string) => {
         setLoading(true)
         try {
             const fetch = await axios.post(addTransaction, {
                 category: category,
                 ...(description ? {description: description} : {description: 'Інше'}),
-                amount: +amount!
+                amount: +amount!,
+                isPayByCard:payMethod==='card'
             })
             if (fetch?.status === 201) {
                 toast.success('ДОДАНО !!!', notifyOpt);
@@ -95,9 +96,22 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                                            value={amount}
                                            className={'border-2'}/>
                                   </label>
-                                    {amount&& <button onClick={onHandleSubmit} className={'text-white z-50 flex gap-2 justify-center items-center absolute top-[35px] left-0 h-[54px] w-full bg-charcoal-dark rounded-3xl'}>
-                                        <IconAdd />
-                                    </button>}
+                                    {amount && <div className={'bg-white absolute top-[35px] left-0 w-full flex gap-2'}>
+                                        <button onClick={()=>onHandleSubmit('cash')} className={'font-bold border-2 border-amber-700 text-black z-50 flex gap-2 justify-center items-center  top-[35px] left-0 h-[54px]  w-1/2 bg-gray-White_dark rounded-3xl'}>
+                                            <IconCash />
+                                            CASH
+                                        </button>
+
+                                        <button onClick={()=>onHandleSubmit('card')} className={'font-bold border-2 border-amber-700 text-black z-50 flex gap-2 justify-center items-center  top-[35px] left-[50%] h-[54px] w-1/2 bg-gray-White_dark rounded-3xl'}>
+                                            <IconCARD />
+                                            CARD
+                                        </button>
+                                    </div>
+
+                                    }
+
+
+
 
                                 </div>
 

@@ -1,7 +1,7 @@
 export const IconConfirm = () => {
 
 
-    return <svg enable-background="new 0 0 59.577 58.667" id="Layer_1" fill={'#32CD32'} version="1.1"
+    return <svg enableBackground="new 0 0 59.577 58.667" id="Layer_1" fill={'#32CD32'} version="1.1"
                 viewBox="0 0 59.577 58.667" width="20px"
     >
         <path

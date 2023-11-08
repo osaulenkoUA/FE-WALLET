@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import {ICategory} from "../../pages";
-import clsx from "clsx";
 import {Spinner} from "../Spinner/Spinner";
 import date from 'date-and-time';
 import axios from "axios";
@@ -8,6 +7,7 @@ import {getOperationdByMonth, updateItem} from "../helpers/endpoints";
 import {IconEdit} from "../assets/Icons/icon-edit";
 import {IconConfirm} from "../assets/Icons/icon-ok";
 import {isSingleDigit} from "../helpers/checkNumbers";
+import {IconCARD, IconGrivna} from "../assets/Icons/icon-add";
 
 export interface IFinnanceItem {
     _id: string
@@ -16,6 +16,7 @@ export interface IFinnanceItem {
     amount: number
     balance?: number
     date: string
+    isPayByCard:boolean
 }
 
 
@@ -27,13 +28,12 @@ export const Analyze = () => {
     const [loading, setLoading] = useState(false);
 
     const [category, setCategory] = useState('');
-    const [showDate, setShowDate] = useState(true);
     const [currentMonth, setCurrentMonth] = useState(+date.format(new Date(), 'M'));
 
     const [isEdit, setIsEdit] = useState('');
 
     const [description, setDescription] = useState('');
-    const [amount, setAmount] = useState<string|number>(0);
+    const [amount, setAmount] = useState<string | number>(0);
 
     const getFinances = async () => {
         setLoading(true)
@@ -116,7 +116,8 @@ export const Analyze = () => {
                     }>Previous Month</p>
                     <p className={'cursor-pointer text-[12px]'}
                        onClick={() => setCurrentMonth(+date.format(new Date(), 'M'))}>Поточний Місяць
-                        - <b>{date.transform(isSingleDigit(currentMonth)?'0':'' + currentMonth.toString(), 'MM', 'MMMM')}</b></p>
+                        - <b>{date.transform(isSingleDigit(currentMonth) ? '0' : '' + currentMonth.toString(), 'MM', 'MMMM')}</b>
+                    </p>
                 </div>
 
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
@@ -137,19 +138,19 @@ export const Analyze = () => {
                             {category === c.category && <div>
                                 {getItemsByCategory(c.category).reverse().map(el => (
                                     <div
-                                        className={clsx(!showDate && 'grid-cols-col2', showDate && 'grid-cols-col3', 'grid items-center gap-4 mb-1')}
+                                        className={'grid-cols-col3 grid items-center gap-4 mb-1'}
                                         key={el._id}>
                                         <div className={'flex gap-[10px] items-center'}>
                                             {isEdit !== el._id &&
-                                            <div onClick={() => {
-                                                setAmount(el.amount);
-                                                setDescription(el.description)
-                                                setIsEdit(el._id)
-                                            }}><IconEdit/></div>}
+                                                <div onClick={() => {
+                                                    setAmount(el.amount);
+                                                    setDescription(el.description)
+                                                    setIsEdit(el._id)
+                                                }}><IconEdit/></div>}
 
                                             {isEdit === el._id &&
-                                            <div className={'animate-bounce'} onClick={() => updateFields(el)}>
-                                                <IconConfirm/></div>}
+                                                <div className={'animate-bounce'} onClick={() => updateFields(el)}>
+                                                    <IconConfirm/></div>}
 
                                             {isEdit !== el._id ? <p>{el.description}</p> :
                                                 <input className={' border pl-2 border-blue-600'} ref={descriptionRef}
@@ -158,7 +159,11 @@ export const Analyze = () => {
 
                                         </div>
 
-                                         <p>{el.date.slice(0, 5)}</p>
+                                        <div className={'flex gap-3'}>
+                                            <p>{el.date.slice(0, 5)}</p>
+                                            {el.isPayByCard? <IconCARD/>:<IconGrivna/>}
+
+                                        </div>
                                         {isEdit !== el._id ? <p className={'justify-self-end'}>{el.amount}</p> :
                                             <input onChange={(e) => {
                                                 setAmount(e.target.value)
