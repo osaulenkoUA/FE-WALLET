@@ -29,6 +29,7 @@ export const Analyze = () => {
 
     const [category, setCategory] = useState('');
     const [currentMonth, setCurrentMonth] = useState(+date.format(new Date(), 'M'));
+    const [currentYear, setCurrentYear] = useState(+date.format(new Date(), 'YYYY'));
 
     const [isEdit, setIsEdit] = useState('');
 
@@ -39,7 +40,8 @@ export const Analyze = () => {
         setLoading(true)
         try {
             const {data} = await axios.post(getOperationdByMonth, {
-                date: `${currentMonth < 10 ? 0 : ''}` + currentMonth
+                date: `${currentMonth < 10 ? 0 : ''}` + currentMonth,
+                year:currentYear.toString()
             })
             setItems(data)
             setLoading(false)
