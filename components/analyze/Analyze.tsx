@@ -41,7 +41,7 @@ export const Analyze = () => {
         try {
             const {data} = await axios.post(getOperationdByMonth, {
                 date: `${currentMonth < 10 ? 0 : ''}` + currentMonth,
-                year:currentYear.toString()
+                year: currentYear.toString()
             })
             setItems(data)
             setLoading(false)
