@@ -41,9 +41,10 @@ export const Analyze = () => {
         try {
             const {data} = await axios.post(getOperationdByMonth, {
                 date: `${currentMonth < 10 ? 0 : ''}` + currentMonth,
-                year: currentYear.toString()
+                year: selectedYear.toString()
             })
             setItems(data)
+            console.log(data)
             setLoading(false)
         } catch (err) {
             console.log(err)
@@ -80,7 +81,7 @@ export const Analyze = () => {
         const categories = JSON.parse(localStorage.getItem('categories') || '[]');
         setCategoryies(categories)
     }, [currentMonth])
-
+    console.log(currentMonth)
     const handleClickCategory = (cat: string) => {
         setCategory(cat)
     }
@@ -107,18 +108,63 @@ export const Analyze = () => {
         const color = listDates.some(d => d.slice(0, 2) === (currDate > 10 ? currDate.toFixed() : '0' + currDate))
         return color ? 'text-red' : 'text-white'
     }
+
+
+
+    const handleChange = (e: { target: { value: string; }; }) => {
+        setCurrentMonth(parseInt(e.target.value));
+    };
+
+    const [selectedYear, setSelectedYear] = useState(2024); // Default to 2023
+
+    const handleChangeYear = (e: { target: { value: string; }; }) => {
+        setSelectedYear(parseInt(e.target.value));
+    };
+
     return (
         <div>
             {!loading && <div className={'p-[16px]'}>
 
-                <div className={'flex gap-4 items-center justify-end mb-2'}>
-                    <p className={'cursor-pointer text-[12px]'} onClick={() => {
-                        currentMonth > 1 && setCurrentMonth(currentMonth - 1)
-                    }
-                    }>Previous Month</p>
-                    <p className={'cursor-pointer text-[12px]'}
-                       onClick={() => setCurrentMonth(+date.format(new Date(), 'M'))}>Поточний Місяць
-                        - <b>{date.transform(isSingleDigit(currentMonth) ? '0' : '' + currentMonth.toString(), 'MM', 'MMMM')}</b>
+                <div className={'grid grid-cols-3 gap-4 items-center justify-end mb-2'}>
+                    <div className="max-w-md mx-auto">
+                        <select id="months"
+                                name="months"
+                                value={currentMonth}
+                                onChange={handleChange}
+                                className="mt-1 block w-full pl-3  py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="" disabled >Select a Month</option>
+                            <option value="1" selected>January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div className="max-w-md mx-auto">
+                        <select id="years"
+                                name="years"
+                                value={selectedYear}
+                                onChange={handleChangeYear}
+                                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="" disabled>Select a Year</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                        </select>
+                    </div>
+                    <p className={'cursor-pointer text-[12px] border-2 border-black p-1'}
+                       onClick={() => {
+
+                           setCurrentMonth(+date.format(new Date(), 'M'))
+                           setSelectedYear(+date.format(new Date(), 'YYYY'))
+                       }}>Поточний Місяць
                     </p>
                 </div>
 
