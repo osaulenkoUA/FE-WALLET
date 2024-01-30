@@ -29,7 +29,6 @@ export const Analyze = () => {
 
     const [category, setCategory] = useState('');
     const [currentMonth, setCurrentMonth] = useState(+date.format(new Date(), 'M'));
-    const [currentYear, setCurrentYear] = useState(+date.format(new Date(), 'YYYY'));
 
     const [isEdit, setIsEdit] = useState('');
 
