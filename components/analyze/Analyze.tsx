@@ -7,6 +7,7 @@ import {getOperationdByMonth, updateItem} from "../helpers/endpoints";
 import {IconEdit} from "../assets/Icons/icon-edit";
 import {IconConfirm} from "../assets/Icons/icon-ok";
 import {IconCARD, IconGrivna} from "../assets/Icons/icon-add";
+import {IconMonth} from "../assets/Icons/icon-month";
 
 export interface IFinnanceItem {
     _id: string
@@ -168,13 +169,13 @@ export const Analyze = () => {
                             <option value="2025">2025</option>
                         </select>
                     </div>
-                    <p className={'cursor-pointer text-[12px] border-2 border-black p-1'}
+                    <div className={'cursor-pointer w-[36px] h-[36px] justify-self-end'}
                        onClick={() => {
 
                            setCurrentMonth(+date.format(new Date(), 'M'))
                            setSelectedYear(+date.format(new Date(), 'YYYY'))
-                       }}>Поточний Місяць
-                    </p>
+                       }}><IconMonth/>
+                    </div>
                 </div>
 
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
