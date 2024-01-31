@@ -6,7 +6,6 @@ import axios from "axios";
 import {getOperationdByMonth, updateItem} from "../helpers/endpoints";
 import {IconEdit} from "../assets/Icons/icon-edit";
 import {IconConfirm} from "../assets/Icons/icon-ok";
-import {isSingleDigit} from "../helpers/checkNumbers";
 import {IconCARD, IconGrivna} from "../assets/Icons/icon-add";
 
 export interface IFinnanceItem {
@@ -16,7 +15,7 @@ export interface IFinnanceItem {
     amount: number
     balance?: number
     date: string
-    isPayByCard:boolean
+    isPayByCard: boolean
 }
 
 
@@ -29,6 +28,7 @@ export const Analyze = () => {
 
     const [category, setCategory] = useState('');
     const [currentMonth, setCurrentMonth] = useState(+date.format(new Date(), 'M'));
+    const [selectedYear, setSelectedYear] = useState(2024); // Default to 2023
 
     const [isEdit, setIsEdit] = useState('');
 
@@ -43,7 +43,6 @@ export const Analyze = () => {
                 year: selectedYear.toString()
             })
             setItems(data)
-            console.log(data)
             setLoading(false)
         } catch (err) {
             console.log(err)
@@ -79,8 +78,8 @@ export const Analyze = () => {
         getFinances();
         const categories = JSON.parse(localStorage.getItem('categories') || '[]');
         setCategoryies(categories)
-    }, [currentMonth])
-    console.log(currentMonth)
+    }, [currentMonth, selectedYear])
+
     const handleClickCategory = (cat: string) => {
         setCategory(cat)
     }
@@ -90,7 +89,20 @@ export const Analyze = () => {
     }
 
     const monthlySpending = () => {
-        return items.reduce((acc, el) => {
+                   return items.reduce((acc, el) => {
+                return acc + el.amount
+            }, 0)
+
+
+    }
+    const monthlySpendingCard = () => {
+        return items.filter(el => el.isPayByCard).reduce((acc, el) => {
+            return acc + el.amount
+        }, 0)
+
+    }
+    const monthlySpendingCash = () => {
+        return items.filter(el => !el.isPayByCard).reduce((acc, el) => {
             return acc + el.amount
         }, 0)
     }
@@ -109,12 +121,10 @@ export const Analyze = () => {
     }
 
 
-
     const handleChange = (e: { target: { value: string; }; }) => {
         setCurrentMonth(parseInt(e.target.value));
     };
 
-    const [selectedYear, setSelectedYear] = useState(2024); // Default to 2023
 
     const handleChangeYear = (e: { target: { value: string; }; }) => {
         setSelectedYear(parseInt(e.target.value));
@@ -131,7 +141,7 @@ export const Analyze = () => {
                                 value={currentMonth}
                                 onChange={handleChange}
                                 className="mt-1 block w-full pl-3  py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                            <option value="" disabled >Select a Month</option>
+                            <option value="" disabled>Select a Month</option>
                             <option value="1" selected>January</option>
                             <option value="2">February</option>
                             <option value="3">March</option>
@@ -146,12 +156,12 @@ export const Analyze = () => {
                             <option value="12">December</option>
                         </select>
                     </div>
-                    <div className="max-w-md mx-auto">
+                    <div className="w-max">
                         <select id="years"
                                 name="years"
                                 value={selectedYear}
                                 onChange={handleChangeYear}
-                                className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                className="text-center mt-1 block w-full pr-2 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             <option value="" disabled>Select a Year</option>
                             <option value="2023">2023</option>
                             <option value="2024">2024</option>
@@ -208,7 +218,7 @@ export const Analyze = () => {
 
                                         <div className={'flex gap-3'}>
                                             <p>{el.date.slice(0, 5)}</p>
-                                            {el.isPayByCard? <IconCARD/>:<IconGrivna/>}
+                                            {el.isPayByCard ? <IconCARD/> : <IconGrivna/>}
 
                                         </div>
                                         {isEdit !== el._id ? <p className={'justify-self-end'}>{el.amount}</p> :
@@ -232,6 +242,10 @@ export const Analyze = () => {
 
                 <div className={'flex justify-end'}><p className={'text-fuchsia-700 text-2xl'}>Загальна сума
                     : {monthlySpending()}грн</p></div>
+                <div className={'flex justify-end'}><p className={'text-fuchsia-700 text-xl'}>Cума картка
+                    : {monthlySpendingCard()}грн</p></div>
+                <div className={'flex justify-end'}><p className={'text-fuchsia-700 text-xl'}>Cума готівка
+                    : {monthlySpendingCash()}грн</p></div>
             </div>}
             {loading && <Spinner/>}
         </div>
