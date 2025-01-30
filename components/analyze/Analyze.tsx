@@ -29,7 +29,7 @@ export const Analyze = () => {
 
     const [category, setCategory] = useState('');
     const [currentMonth, setCurrentMonth] = useState(+date.format(new Date(), 'M'));
-    const [selectedYear, setSelectedYear] = useState(2024); // Default to 2023
+    const [selectedYear, setSelectedYear] = useState(2025); // Default to 2023
 
     const [isEdit, setIsEdit] = useState('');
 
@@ -170,27 +170,35 @@ export const Analyze = () => {
                         </select>
                     </div>
                     <div className={'cursor-pointer w-[36px] h-[36px] justify-self-end'}
-                       onClick={() => {
+                         onClick={() => {
 
-                           setCurrentMonth(+date.format(new Date(), 'M'))
-                           setSelectedYear(+date.format(new Date(), 'YYYY'))
-                       }}><IconMonth/>
+                             setCurrentMonth(+date.format(new Date(), 'M'))
+                             setSelectedYear(+date.format(new Date(), 'YYYY'))
+                         }}><IconMonth/>
                     </div>
                 </div>
 
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
                     {categoryies.map(c => (
                         <div className={'mb-2'} key={c._id}>
-                            <div className={'flex bg-blue-500 rounded-2xl items-center'}>
+                            <div
+                                className={'flex bg-gradient-to-r from-blue-500 to-teal-500 rounded-2xl items-center shadow-lg hover:shadow-xl transition-shadow duration-300'}>
                                 <p onClick={() => {
                                     if (category === c.category) {
                                         setCategory('')
                                         return
                                     }
                                     handleClickCategory(c.category)
+                                    // Trigger animation
+                                    const element = document.getElementById(`category-${c.category}`);
+                                    if (element) {
+                                        element.classList.add('animate-bounce');
+                                        setTimeout(() => element.classList.remove('animate-bounce'), 500); // Remove after 0.5s
+                                    }
                                 }}
-                                   className={'text-white w-full  p-3 text-[18px] font-bold '}>{c?.category}</p>
-                                <p className={`p-3 text-[18px] font-bold ${getColor(c)}`}>{getSummaryCategory(c.category)}</p>
+                                   id={`category-${c.category}`}
+                                   className={'text-gray-100 w-full p-3 text-[18px] font-bold hover:text-white transition-colors duration-300 cursor-pointer'}>{c?.category}</p>
+                                <p className={`p-3 text-[18px] font-bold text-white bg-opacity-20 rounded-lg`}>{getSummaryCategory(c.category)}</p>
                             </div>
 
                             {category === c.category && <div>
@@ -241,12 +249,28 @@ export const Analyze = () => {
                     ))}
                 </div>
 
-                <div className={'flex justify-end'}><p className={'text-fuchsia-700 text-2xl'}>Загальна сума
-                    : {monthlySpending()}грн</p></div>
-                <div className={'flex justify-end'}><p className={'text-fuchsia-700 text-xl'}>Cума картка
-                    : {monthlySpendingCard()}грн</p></div>
-                <div className={'flex justify-end'}><p className={'text-fuchsia-700 text-xl'}>Cума готівка
-                    : {monthlySpendingCash()}грн</p></div>
+                <div className="space-y-2 bg-white p-6 rounded-lg shadow-md">
+                    {/* Total Amount */}
+                    <div
+                        className="flex justify-between items-center bg-gradient-to-r from-purple-600 to-indigo-600 p-4 rounded-lg">
+                        <p className="text-white text-2xl font-semibold">Загальна сума</p>
+                        <p className="text-white text-2xl font-bold">{monthlySpending()} грн</p>
+                    </div>
+
+                    {/* Card Amount */}
+                    <div
+                        className="flex justify-between items-center bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                        <p className="text-gray-700 text-xl font-medium">Сума картка</p>
+                        <p className="text-gray-700 text-xl font-semibold">{monthlySpendingCard()} грн</p>
+                    </div>
+
+                    {/* Cash Amount */}
+                    <div
+                        className="flex justify-between items-center bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                        <p className="text-gray-700 text-xl font-medium">Сума готівка</p>
+                        <p className="text-gray-700 text-xl font-semibold">{monthlySpendingCash()} грн</p>
+                    </div>
+                </div>
             </div>}
             {loading && <Spinner/>}
         </div>

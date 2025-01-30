@@ -77,45 +77,56 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
                     {items.map(c => (
                         <div className={'mb-2'} key={c._id}>
-                            <p onClick={() => handleClickCategory(c.category)}
-                               className={'text-white w-full bg-green p-3 text-[18px] font-bold rounded-3xl'}>{c?.category}</p>
+                            <p
+                                onClick={() => handleClickCategory(c.category)}
+                                className="w-full p-4 text-lg font-semibold rounded-2xl
+             flex items-center justify-between shadow-md cursor-pointer
+             transition-all duration-300
+             bg-gradient-to-r from-indigo-500 to-purple-500 text-white
+             hover:from-purple-500 hover:to-pink-500 hover:shadow-lg
+             active:scale-95"
+                            >
+                                {c?.category}
+                                <span className="ml-2">▼</span> {/* Можна замінити на іконку */}
+                            </p>
                             {category === c?.category &&
-                              <>
-                                <CategoryItem chosenDescription={chosenDescription}
-                                              setChosenDescription={setChosenDescription}
-                                              descriptions={c?.description}/>
+                                <>
+                                    <CategoryItem chosenDescription={chosenDescription}
+                                                  setChosenDescription={setChosenDescription}
+                                                  descriptions={c?.description}/>
 
 
-                                <div className={'relative flex gap-2 items-center mt-2 h-[30px]'}>
-                                  <label className={'flex flex-col text-sm w-full'}>
-                                    <input onChange={onHandleChangeDescrip} value={description}
-                                           className={'border-2'}/>
-                                  </label>
-                                  <label className={'flex w-[50px] flex-col text-sm'}>
-                                    <input type={'number'} ref={inputEl} onChange={onHandleAddAmount}
-                                           value={amount}
-                                           className={'border-2'}/>
-                                  </label>
-                                    {amount && <div className={'bg-white absolute top-[35px] left-0 w-full flex gap-2'}>
-                                        <button onClick={()=>onHandleSubmit('cash')} className={'font-bold border-2 border-amber-700 text-black z-50 flex gap-2 justify-center items-center  top-[35px] left-0 h-[54px]  w-1/2 bg-gray-White_dark rounded-3xl'}>
-                                            <IconCash />
-                                            CASH
-                                        </button>
+                                    <div className={'relative flex gap-2 items-center mt-2 h-[30px]'}>
+                                        <label className={'flex flex-col text-sm w-full'}>
+                                            <input onChange={onHandleChangeDescrip} value={description}
+                                                   className={'border-2'}/>
+                                        </label>
+                                        <label className={'flex w-[50px] flex-col text-sm'}>
+                                            <input type={'number'} ref={inputEl} onChange={onHandleAddAmount}
+                                                   value={amount}
+                                                   className={'border-2'}/>
+                                        </label>
+                                        {amount &&
+                                            <div className={'bg-white absolute top-[35px] left-0 w-full flex gap-2'}>
+                                                <button onClick={() => onHandleSubmit('cash')}
+                                                        className={'font-bold border-2 border-amber-700 text-black z-50 flex gap-2 justify-center items-center  top-[35px] left-0 h-[64px]  w-1/2 bg-gray-White_dark rounded-3xl'}>
+                                                    <IconCash/>
+                                                    CASH
+                                                </button>
 
-                                        <button onClick={()=>onHandleSubmit('card')} className={'font-bold border-2 border-amber-700 text-black z-50 flex gap-2 justify-center items-center  top-[35px] left-[50%] h-[54px] w-1/2 bg-gray-White_dark rounded-3xl'}>
-                                            <IconCARD />
-                                            CARD
-                                        </button>
+                                                <button onClick={() => onHandleSubmit('card')}
+                                                        className={'font-bold border-2 border-amber-700 text-black z-50 flex gap-2 justify-center items-center  top-[35px] left-[50%] h-[64px] w-1/2 bg-gray-White_dark rounded-3xl'}>
+                                                    <IconCARD/>
+                                                    CARD
+                                                </button>
+                                            </div>
+
+                                        }
+
+
                                     </div>
 
-                                    }
-
-
-
-
-                                </div>
-
-                              </>
+                                </>
 
 
                             }
