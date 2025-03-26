@@ -2,7 +2,7 @@ import React from "react";
 import clsx from 'clsx'
 
 export interface IProps {
-    descriptions: [string] | undefined
+    descriptions:  string[] | undefined
     setChosenDescription: (d: string) => void
     chosenDescription: string
 }

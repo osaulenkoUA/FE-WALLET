@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {ICategory} from "../../pages";
 import {CategoryItem} from "./CategoryItem";
 import axios from "axios";
-import {addTransaction} from "../helpers/endpoints";
+import {addTransaction, addTransactionSupabase} from "../helpers/endpoints";
 import {IconCARD, IconCash} from "../assets/Icons/icon-add";
 import {Spinner} from "../Spinner/Spinner";
 import {toast, ToastContainer, ToastOptions} from 'react-toastify';
@@ -15,7 +15,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     const inputEl = useRef(null);
     const [description, setDescription] = useState(chosenDescription);
     const [amount, setAmount] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState<ICategory>({} as ICategory);
 
     const notifyOpt: ToastOptions = {
         position: "top-center",
@@ -39,11 +39,18 @@ export default function AddFinance({items}: { items: ICategory[] }) {
         setLoading(true)
         try {
             const fetch = await axios.post(addTransaction, {
-                category: category,
+                category: category.name,
                 ...(description ? {description: description} : {description: 'Інше'}),
                 amount: +amount!,
                 isPayByCard:payMethod==='card'
             })
+            const supabaseAddFinance = await axios.post(addTransactionSupabase, {
+                categoryId: category.id,
+                ...(description ? {description: description} : {description: 'Інше'}),
+                amount: +amount!,
+                paymentMethod: payMethod
+            })
+
             if (fetch?.status === 201) {
                 toast.success('ДОДАНО !!!', notifyOpt);
                 setDescription('');
@@ -59,7 +66,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
         }
     }
 
-    const handleClickCategory = (cat: string) => {
+    const handleClickCategory = (cat: ICategory) => {
         setCategory(cat)
         setChosenDescription('')
         setAmount('')
@@ -76,9 +83,9 @@ export default function AddFinance({items}: { items: ICategory[] }) {
             {!loading ? (
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
                     {items.map(c => (
-                        <div className={'mb-2'} key={c._id}>
+                        <div className={'mb-2'} key={c.id}>
                             <p
-                                onClick={() => handleClickCategory(c.category)}
+                                onClick={() => handleClickCategory(c)}
                                 className="w-full p-4 text-lg font-semibold rounded-2xl
              flex items-center justify-between shadow-md cursor-pointer
              transition-all duration-300
@@ -86,10 +93,10 @@ export default function AddFinance({items}: { items: ICategory[] }) {
              hover:from-purple-500 hover:to-pink-500 hover:shadow-lg
              active:scale-95"
                             >
-                                {c?.category}
+                                {c?.name}
                                 <span className="ml-2">▼</span> {/* Можна замінити на іконку */}
                             </p>
-                            {category === c?.category &&
+                            {category.id === c?.id &&
                                 <>
                                     <CategoryItem chosenDescription={chosenDescription}
                                                   setChosenDescription={setChosenDescription}

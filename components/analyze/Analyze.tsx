@@ -180,29 +180,29 @@ export const Analyze = () => {
 
                 <div className={'grid grid-cols-1 lg:grid-cols-3'}>
                     {categoryies.map(c => (
-                        <div className={'mb-2'} key={c._id}>
+                        <div className={'mb-2'} key={c.id}>
                             <div
                                 className={'flex bg-gradient-to-r from-blue-500 to-teal-500 rounded-2xl items-center shadow-lg hover:shadow-xl transition-shadow duration-300'}>
                                 <p onClick={() => {
-                                    if (category === c.category) {
+                                    if (category === c.name) {
                                         setCategory('')
                                         return
                                     }
-                                    handleClickCategory(c.category)
+                                    handleClickCategory(c.name)
                                     // Trigger animation
-                                    const element = document.getElementById(`category-${c.category}`);
+                                    const element = document.getElementById(`category-${c.name}`);
                                     if (element) {
                                         element.classList.add('animate-bounce');
                                         setTimeout(() => element.classList.remove('animate-bounce'), 500); // Remove after 0.5s
                                     }
                                 }}
-                                   id={`category-${c.category}`}
-                                   className={'text-gray-100 w-full p-3 text-[18px] font-bold hover:text-white transition-colors duration-300 cursor-pointer'}>{c?.category}</p>
-                                <p className={`p-3 text-[18px] font-bold text-white bg-opacity-20 rounded-lg`}>{getSummaryCategory(c.category)}</p>
+                                   id={`category-${c.name}`}
+                                   className={'text-gray-100 w-full p-3 text-[18px] font-bold hover:text-white transition-colors duration-300 cursor-pointer'}>{c?.name}</p>
+                                <p className={`p-3 text-[18px] font-bold text-white bg-opacity-20 rounded-lg`}>{getSummaryCategory(c.name)}</p>
                             </div>
 
-                            {category === c.category && <div>
-                                {getItemsByCategory(c.category).reverse().map(el => (
+                            {category === c.name && <div>
+                                {getItemsByCategory(c.name).reverse().map(el => (
                                     <div
                                         className={'grid-cols-col3 grid items-center gap-4 mb-1'}
                                         key={el._id}>
@@ -240,7 +240,7 @@ export const Analyze = () => {
                                 ))}
                                 <div className={'flex justify-between items-center border-t-2'}>
                                     <p>Сума:</p>
-                                    <p>{getSummaryCategory(c.category)}</p>
+                                    <p>{getSummaryCategory(c.name)}</p>
                                 </div>
                             </div>
                             }
