@@ -7,6 +7,7 @@ import {IconCARD, IconCash} from "../assets/Icons/icon-add";
 import {Spinner} from "../Spinner/Spinner";
 import {toast, ToastContainer, ToastOptions} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useFinancesStore} from "../../stores"
 
 export default function AddFinance({items}: { items: ICategory[] }) {
 
@@ -16,7 +17,8 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     const [description, setDescription] = useState(chosenDescription);
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState<ICategory>({} as ICategory);
-
+    const financesStore = useFinancesStore()
+// const category = financesStore.category
     const notifyOpt: ToastOptions = {
         position: "top-center",
         autoClose: 1000,

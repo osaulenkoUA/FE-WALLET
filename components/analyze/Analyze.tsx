@@ -8,6 +8,7 @@ import {IconEdit} from "../assets/Icons/icon-edit";
 import {IconConfirm} from "../assets/Icons/icon-ok";
 import {IconCARD, IconGrivna} from "../assets/Icons/icon-add";
 import {IconMonth} from "../assets/Icons/icon-month";
+import {useFinancesStore} from "../../stores"
 
 export interface IFinnanceItem {
     _id: string
@@ -24,7 +25,12 @@ export const Analyze = () => {
     const descriptionRef = useRef(null);
 
     const [items, setItems] = useState<IFinnanceItem[]>([]);
-    const [categoryies, setCategoryies] = useState<ICategory[]>([]);
+
+    // const [categoryies, setCategoryies] = useState<ICategory[]>([]);
+    const financesStore = useFinancesStore()
+    const categoryies = financesStore.category
+
+
     const [loading, setLoading] = useState(false);
 
     const [category, setCategory] = useState('');
@@ -77,8 +83,8 @@ export const Analyze = () => {
 
     useEffect(() => {
         getFinances();
-        const categories = JSON.parse(localStorage.getItem('categories') || '[]');
-        setCategoryies(categories)
+        // const categories = JSON.parse(localStorage.getItem('categories') || '[]');
+        // setCategoryies(categories)
     }, [currentMonth, selectedYear])
 
     const handleClickCategory = (cat: string) => {
