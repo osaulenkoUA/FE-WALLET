@@ -46,12 +46,12 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                 amount: +amount!,
                 isPayByCard:payMethod==='card'
             })
-            const supabaseAddFinance = await axios.post(addTransactionSupabase, {
-                categoryId: category.id,
-                ...(description ? {description: description} : {description: 'Інше'}),
-                amount: +amount!,
-                paymentMethod: payMethod
-            })
+            // const supabaseAddFinance = await axios.post(addTransactionSupabase, {
+            //     categoryId: category.id,
+            //     ...(description ? {description: description} : {description: 'Інше'}),
+            //     amount: +amount!,
+            //     paymentMethod: payMethod
+            // })
 
             if (fetch?.status === 201) {
                 toast.success('ДОДАНО !!!', notifyOpt);
