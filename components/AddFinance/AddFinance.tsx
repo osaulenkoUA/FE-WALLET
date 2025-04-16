@@ -8,6 +8,7 @@ import {Spinner} from "../Spinner/Spinner";
 import {toast, ToastContainer, ToastOptions} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useFinancesStore} from "../../stores"
+import {paymentMethod} from "../../stores/finances.store"
 
 export default function AddFinance({items}: { items: ICategory[] }) {
 
@@ -37,7 +38,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
     }, [chosenDescription]);
 
 
-    const onHandleSubmit = async (payMethod:string) => {
+    const onHandleSubmit = async (payMethod: paymentMethod) => {
         setLoading(true)
         try {
             const fetch = await axios.post(addTransaction, {
@@ -46,10 +47,10 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                 amount: +amount!,
                 isPayByCard:payMethod==='card'
             })
-            const supabaseAddFinance = await axios.post(addTransactionSupabase, {
+            financesStore.addFinance({
                 categoryId: category.id,
                 ...(description ? {description: description} : {description: 'Інше'}),
-                amount: +amount!,
+                amount: +amount,
                 paymentMethod: payMethod
             })
 
