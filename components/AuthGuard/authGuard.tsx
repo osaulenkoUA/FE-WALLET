@@ -8,15 +8,13 @@ export function AuthGuard({ children }: { children: ReactNode }) {
     const authStore = useAuthStore();
     const router = useRouter();
 
-
+    const checkAuth = async () => {
+        const isAuth = authStore.authCheck();
+        if (!isAuth) {
+            router.push("/login");
+        }
+    };
     useEffect(() => {
-        const checkAuth = async () => {
-            const isAuth = await authStore.authCheck();
-            if (!isAuth) {
-                router.push("/login");
-            }
-        };
-
         void checkAuth();
     }, []);
 

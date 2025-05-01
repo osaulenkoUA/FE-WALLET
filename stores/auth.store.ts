@@ -16,9 +16,9 @@ export interface IUser {
 
 export type SessionState = {
     user: IUser
-    authenticated: false;
+    authenticated: boolean;
     googleAuth: () => void;
-    authCheck: () => void
+    authCheck: () => Promise<boolean>;
     getUserProfile: () => void
 };
 
@@ -33,13 +33,14 @@ const useAuthStore = create(devtools(subscribeWithSelector<SessionState>((set) =
             console.error(err)
         }
     },
-    authCheck: async () => {
+    authCheck: async (): Promise<boolean> => {
         try {
             const {data} = await axios.get(urlSupabase.checkAuth, {withCredentials: true})
             set({user: data.user || null, authenticated: data.authenticated})
             return data.authenticated
         } catch (err) {
             console.log(err)
+            return false;
         }
     },
     getUserProfile: async () => {
