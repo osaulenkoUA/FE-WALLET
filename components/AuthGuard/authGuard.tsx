@@ -9,8 +9,11 @@ export function AuthGuard({ children }: { children: ReactNode }) {
     const router = useRouter();
 
     const checkAuth = async () => {
-        const isAuth = authStore.authCheck();
+        const isAuth = await authStore.authCheck();
+        console.log(isAuth)
         if (!isAuth) {
+            console.log('isAuth=',isAuth)
+
             router.push("/login");
         }
     };
