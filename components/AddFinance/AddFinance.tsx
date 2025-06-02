@@ -79,7 +79,6 @@ export default function AddFinance({items}: { items: ICategory[] }) {
         setAmount(e.target?.value)
     }
     const onHandleChangeDescrip = (e: any) => setDescription(e.target?.value)
-
     return (
         <div className={'p-4 pt-[42px]'}>
             {!loading ? (

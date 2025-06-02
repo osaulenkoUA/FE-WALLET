@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {devtools, subscribeWithSelector} from 'zustand/middleware';
 import {ICategory} from "../pages"
 import axios from "axios"
-import { fetchCategoriesSupabase2 } from "../components/helpers/endpoints"
+import {fetchCategoriesSupabase2} from "../components/helpers/endpoints"
 
 export type SessionState = {
     category: ICategory[];
@@ -14,13 +14,14 @@ const useFinancesStore = create(
     devtools(
         subscribeWithSelector<SessionState>((set) => ({
             category: [] as ICategory[],
-            setCategories: async ()=>{
+            setCategories: async () => {
                 const {data} = await axios.get(fetchCategoriesSupabase2)
-                const categoriesS = data.map((el: { id: any; name: any; }) => ({
+                console.log(data)
+                const categoriesS = data.map((el: { id: any; name: any; subcategories: { name: string }[] }) => ({
                     ...el,
-                    description: []
+                    description: el.subcategories.map(el => el.name)
                 }))
-                set({ category: categoriesS })
+                set({category: categoriesS})
             }
         })),
 
