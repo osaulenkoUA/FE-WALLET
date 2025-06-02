@@ -204,7 +204,7 @@ export const Analyze = () => {
                                 }}
                                    id={`category-${c.name}`}
                                    className={'text-gray-100 w-full p-3 text-[18px] font-bold hover:text-white transition-colors duration-300 cursor-pointer'}>{c?.name}</p>
-                                <p className={`p-3 text-[18px] font-bold text-white bg-opacity-20 rounded-lg ${getColor(c)}`}>{getSummaryCategory(c.name)}</p>
+                                <p className={`p-3 text-[18px] font-bold bg-opacity-20 rounded-lg ${getColor(c)}`}>{getSummaryCategory(c.name)}</p>
                             </div>
 
                             {category === c.name && <div>
