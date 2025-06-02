@@ -19,7 +19,7 @@ const useFinancesStore = create(
                 console.log(data)
                 const categoriesS = data.map((el: { id: any; name: any; subcategories: { name: string }[] }) => ({
                     ...el,
-                    description: el.subcategories.map(el => el.name)
+                    description: el.subcategories?.map(el => el.name)??[]
                 }))
                 set({category: categoriesS})
             }
