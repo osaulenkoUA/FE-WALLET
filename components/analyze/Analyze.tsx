@@ -124,10 +124,10 @@ export const Analyze = () => {
     }
 
     const getColor = (el: any) => {
-        const listDates = items.filter(f => f.category === el.category).map(m => m.date)
+        const listDates = items.filter(f => f.category === el.name).map(m => m.date)
         const currDate = new Date().getDate()
         const color = listDates.some(d => d.slice(0, 2) === (currDate > 10 ? currDate.toFixed() : '0' + currDate))
-        return color ? 'text-red' : 'text-white'
+        return color ? 'text-red font-black text-[22px]' : 'text-white'
     }
 
 
@@ -152,7 +152,7 @@ export const Analyze = () => {
                                 onChange={handleChange}
                                 className="mt-1 block w-full pl-3  py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                             <option value="" disabled>Select a Month</option>
-                            <option value="1" selected>January</option>
+                            <option value="1">January</option>
                             <option value="2">February</option>
                             <option value="3">March</option>
                             <option value="4">April</option>
@@ -207,7 +207,7 @@ export const Analyze = () => {
                                 }}
                                    id={`category-${c.name}`}
                                    className={'text-gray-100 w-full p-3 text-[18px] font-bold hover:text-white transition-colors duration-300 cursor-pointer'}>{c?.name}</p>
-                                <p className={`p-3 text-[18px] font-bold text-white bg-opacity-20 rounded-lg`}>{getSummaryCategory(c.name)}</p>
+                                <p className={`p-3 text-[18px] font-bold bg-opacity-20 rounded-lg ${getColor(c)}`}>{getSummaryCategory(c.name)}</p>
                             </div>
 
                             {category === c.name && <div>

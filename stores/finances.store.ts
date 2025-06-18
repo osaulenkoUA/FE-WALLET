@@ -58,9 +58,10 @@ const useFinancesStore = create(
                 try {
                     set({loading: true})
                     const {data} = await axios.get(fetchCategoriesSupabase, {withCredentials: true})
-                    const categoriesS = data.map((el: { id: any; name: any; }) => ({
+                    const categoriesS = data.map((el: { id: any; name: any;subcategories: { name: string }[] }) => ({
                         ...el,
-                        description: []
+                        description: el.subcategories?.map(el => el.name)??[]
+
                     }))
                     set({category: categoriesS})
                 } catch (err) {

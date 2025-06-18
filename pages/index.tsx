@@ -13,6 +13,7 @@ export interface ICategory {
     name: string
     id: string
     description?: string[]
+    subcategories?:[]
 }
 
 export default function Home() {

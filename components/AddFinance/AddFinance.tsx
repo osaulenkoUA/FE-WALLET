@@ -39,13 +39,24 @@ export default function AddFinance({items}: { items: ICategory[] }) {
             financesStore.addFinance({
                 ...(category?.id ? {categoryId: category?.id} : {categoryId: ''}),
                 ...(description ? {description: description} : {description: 'Інше'}),
-                amount: +amount,
-                paymentMethod: payMethod
+                amount: +amount!,
+                isPayByCard:payMethod==='card'
             })
-            toast.success('ДОДАНО !!!', notifyOpt);
-            setDescription('');
-            setAmount('');
-            setChosenDescription('')
+            // const supabaseAddFinance = await axios.post(addTransactionSupabase, {
+            //     categoryId: category.id,
+            //     ...(description ? {description: description} : {description: 'Інше'}),
+            //     amount: +amount!,
+            //     paymentMethod: payMethod
+            // })
+
+            if (fetch?.status === 201) {
+                toast.success('ДОДАНО !!!', notifyOpt);
+                setDescription('');
+                setAmount('');
+                setChosenDescription('')
+                setLoading(false)
+                return;
+            }
         } catch (err) {
             toast.error('ERROR, спробуй ще (', notifyOpt);
             console.log(err)
@@ -65,7 +76,6 @@ export default function AddFinance({items}: { items: ICategory[] }) {
         }
     }
     const onHandleChangeDescrip = (e: any) => setDescription(e.target?.value)
-
     return (
         <div className={'p-4 pt-[42px]'}>
             <div className={'grid grid-cols-1 lg:grid-cols-3'}>
