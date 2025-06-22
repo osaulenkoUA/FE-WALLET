@@ -1,8 +1,9 @@
 const BASE_URL = 'https://homewallet.vercel.app';
 
 
-export const BASE_URL_SUPABASE = 'https://supabase-wallet.vercel.app';
-// const BASE_URL_SUPABASE = 'http://localhost:3000';
+// export const BASE_URL_SUPABASE = 'https://supabase-wallet.vercel.app';
+// const BASE_URL_SUPABASE = 'http://localhost:3005';
+const BASE_URL_SUPABASE = 'https://wallet-be.duckdns.org';
 
 export const fetchCategories = `${BASE_URL}/category/getCategories`;
 // export const addCategories = `${BASE_URL}/category/addCategory`;

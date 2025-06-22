@@ -6,6 +6,8 @@ import {toast, ToastContainer, ToastOptions} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useFinancesStore} from "../../stores"
 import {paymentMethod} from "../../stores/finances.store"
+import axios from "axios"
+import {addTransactionSupabase, urlSupabaseFinances} from "../helpers/endpoints"
 
 export default function AddFinance({items}: { items: ICategory[] }) {
 
@@ -40,23 +42,23 @@ export default function AddFinance({items}: { items: ICategory[] }) {
                 ...(category?.id ? {categoryId: category?.id} : {categoryId: ''}),
                 ...(description ? {description: description} : {description: 'Інше'}),
                 amount: +amount!,
-                isPayByCard:payMethod==='card'
+                paymentMethod: payMethod
             })
-            // const supabaseAddFinance = await axios.post(addTransactionSupabase, {
+            // const supabaseAddFinance = await axios.post(urlSupabaseFinances.addTransaction, {
             //     categoryId: category.id,
             //     ...(description ? {description: description} : {description: 'Інше'}),
             //     amount: +amount!,
             //     paymentMethod: payMethod
             // })
 
-            if (fetch?.status === 201) {
-                toast.success('ДОДАНО !!!', notifyOpt);
-                setDescription('');
-                setAmount('');
-                setChosenDescription('')
-                setLoading(false)
-                return;
-            }
+            // if (fetch?.status === 201) {
+            //     toast.success('ДОДАНО !!!', notifyOpt);
+            //     setDescription('');
+            //     setAmount('');
+            //     setChosenDescription('')
+            //     setLoading(false)
+            //     return;
+            // }
         } catch (err) {
             toast.error('ERROR, спробуй ще (', notifyOpt);
             console.log(err)
@@ -76,6 +78,7 @@ export default function AddFinance({items}: { items: ICategory[] }) {
         }
     }
     const onHandleChangeDescrip = (e: any) => setDescription(e.target?.value)
+    console.log('ADD FINANCE')
     return (
         <div className={'p-4 pt-[42px]'}>
             <div className={'grid grid-cols-1 lg:grid-cols-3'}>
