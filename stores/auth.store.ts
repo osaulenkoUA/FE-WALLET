@@ -28,7 +28,8 @@ const useAuthStore = create(devtools(subscribeWithSelector<SessionState>((set) =
     authenticated: false,
     googleAuth: async () => {
         try {
-            await axios.get(`https://wallet-be.duckdns.org/auth/google`,{withCredentials: true})
+            // await axios.get(`https://wallet-be.duckdns.org/auth/google`,{withCredentials: true})
+            window.location.href = 'https://wallet-be.duckdns.org/auth/google'; // Прямий редирект
         } catch (err) {
             console.error(err)
         }
