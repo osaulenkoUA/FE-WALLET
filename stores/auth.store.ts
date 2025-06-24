@@ -28,7 +28,7 @@ const useAuthStore = create(devtools(subscribeWithSelector<SessionState>((set) =
     authenticated: false,
     googleAuth: async () => {
         try {
-            await axios.get(`https://supabase-wallet.vercel.app/auth/google`)
+            await axios.get(`https://wallet-be.duckdns.org/auth/google`,{withCredentials: true})
         } catch (err) {
             console.error(err)
         }
