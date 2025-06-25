@@ -37,7 +37,7 @@ export default function Home() {
             {authenticated && <Header setActiveTab={setActiveTab}/>}
             {activeTab === '0' && authenticated && <AddFinance items={financesStore.category}/>}
             {activeTab === '1' && authenticated && <AnalyzeNew/>}
-            {activeTab === '7' && authenticated && <Analyze/>}
+            {/*{activeTab === '7' && authenticated && <Analyze/>}*/}
             {activeTab === '2' && authenticated && <Settings/>}
             {financesStore.loading && <Spinner/>}
         </AuthGuard>

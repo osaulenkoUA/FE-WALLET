@@ -6,7 +6,7 @@ export function Header({setActiveTab}:{setActiveTab:(val:string)=>void}) {
              <div className={'text-white font-bold cursor-pointer'} onClick={() => setActiveTab('1')}> Аналіз</div>
              <div className={'text-white font-bold cursor-pointer'} onClick={() => setActiveTab('2')}> SETUP
              </div>
-             <div className={'text-white font-bold cursor-pointer'} onClick={() => setActiveTab('7')}> ANALYS_OLD</div>
+             {/*<div className={'text-white font-bold cursor-pointer'} onClick={() => setActiveTab('7')}> ANALYS_OLD</div>*/}
          </div>
      );
 }
