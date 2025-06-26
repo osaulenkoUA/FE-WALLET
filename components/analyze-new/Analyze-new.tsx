@@ -95,8 +95,6 @@ export const AnalyzeNew = () => {
         return items.reduce((acc, el) => {
             return acc + el.amount
         }, 0)
-
-
     }
     const monthlySpendingCard = () => {
         return items.filter(el => el.paymentMethod==='card').reduce((acc, el) => {

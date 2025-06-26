@@ -21,23 +21,12 @@ export default function Home() {
     const {authenticated} = useAuthStore();
     const [activeTab, setActiveTab] = useState('0');
     const financesStore = useFinancesStore()
-
-    const getCategories = async () => {
-        try {
-            financesStore.setCategories()
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    useEffect(() => {
-    void getCategories();
-    }, [])
     return (
         <AuthGuard>
             {authenticated && <Header setActiveTab={setActiveTab}/>}
             {activeTab === '0' && authenticated && <AddFinance items={financesStore.category}/>}
             {activeTab === '1' && authenticated && <AnalyzeNew/>}
-            {/*{activeTab === '7' && authenticated && <Analyze/>}*/}
+            {activeTab === '7' && authenticated && <Analyze/>}
             {activeTab === '2' && authenticated && <Settings/>}
             {financesStore.loading && <Spinner/>}
         </AuthGuard>

@@ -17,6 +17,7 @@
     "axios": "^1.8.4",
     "clsx": "^1.2.1",
     "date-and-time": "^2.4.1",
+    "dotenv": "^16.5.0",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.1",
     "js-cookie": "^3.0.5",

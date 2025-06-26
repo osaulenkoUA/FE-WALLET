@@ -6,8 +6,6 @@ import {toast, ToastContainer, ToastOptions} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useFinancesStore} from "../../stores"
 import {paymentMethod} from "../../stores/finances.store"
-import axios from "axios"
-import {addTransactionSupabase, urlSupabaseFinances} from "../helpers/endpoints"
 
 export default function AddFinance({items}: { items: ICategory[] }) {
 
@@ -29,7 +27,16 @@ export default function AddFinance({items}: { items: ICategory[] }) {
         progress: undefined,
         theme: "light",
     };
-
+    const getCategories = async () => {
+        try {
+            financesStore.setCategories()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        void getCategories();
+    }, [])
     useEffect(() => {
         setDescription(chosenDescription)
         // @ts-ignore

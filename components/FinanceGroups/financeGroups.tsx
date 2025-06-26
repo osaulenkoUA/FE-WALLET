@@ -27,8 +27,10 @@ export default function FinanceGroups() {
     }
 
     const onAtivateGroup = async (idGroup: string) => {
-        void await financesStore.activateFinanceGroup(idGroup)
-        void await getUserProfile()
+        void financesStore.activateFinanceGroup(idGroup)
+        void getUserProfile()
+        void financesStore.setCategories()
+
     }
 
     useEffect(() => {
