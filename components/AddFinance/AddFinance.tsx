@@ -45,27 +45,18 @@ export default function AddFinance({items}: { items: ICategory[] }) {
 
     const onHandleSubmit = async (payMethod: paymentMethod) => {
         try {
-            financesStore.addFinance({
+            const data: number | undefined = await financesStore.addFinance({
                 ...(category?.id ? {categoryId: category?.id} : {categoryId: ''}),
                 ...(description ? {description: description} : {description: 'Інше'}),
-                amount: +amount!,
+                amount: amount ? +amount : 0,
                 paymentMethod: payMethod
             })
-            // const supabaseAddFinance = await axios.post(urlSupabaseFinances.addTransaction, {
-            //     categoryId: category.id,
-            //     ...(description ? {description: description} : {description: 'Інше'}),
-            //     amount: +amount!,
-            //     paymentMethod: payMethod
-            // })
-
-            // if (fetch?.status === 201) {
-            //     toast.success('ДОДАНО !!!', notifyOpt);
-            //     setDescription('');
-            //     setAmount('');
-            //     setChosenDescription('')
-            //     setLoading(false)
-            //     return;
-            // }
+            if (data === 201) {
+                toast.success('ДОДАНО !!!', notifyOpt);
+                setDescription('');
+                setAmount('');
+                setChosenDescription('')
+            }
         } catch (err) {
             toast.error('ERROR, спробуй ще (', notifyOpt);
             console.log(err)

@@ -39,7 +39,7 @@ export type SessionState = {
     financeGroups: { id: string; name: string }[];
     setCategories: () => void;
     addCategory: (name: string) => void;
-    addFinance: (data: IPayloadFinance) => void;
+    addFinance: (data: IPayloadFinance) => Promise<number | undefined>;
     getFinances: (data: { month: string; year: string }) => void;
     getFinanceGroups: () => void;
     addFinanceGroup: (name: string) => void;
@@ -58,9 +58,9 @@ const useFinancesStore = create(
                 try {
                     set({loading: true})
                     const {data} = await axios.get(fetchCategoriesSupabase, {withCredentials: true})
-                    const categoriesS = data.map((el: { id: any; name: any;subcategories: { name: string }[] }) => ({
+                    const categoriesS = data.map((el: { id: any; name: any; subcategories: { name: string }[] }) => ({
                         ...el,
-                        description: el.subcategories?.map(el => el.name)??[]
+                        description: el.subcategories?.map(el => el.name) ?? []
 
                     }))
                     set({category: categoriesS})
@@ -90,10 +90,11 @@ const useFinancesStore = create(
 
                 }
             },
-            addFinance: async (payload) => {
+            addFinance: async (payload): Promise<number | undefined> => {
                 set({loading: true})
                 try {
-                    await axios.post(urlSupabaseFinances.addTransaction, payload, {withCredentials: true})
+                    const {data} = await axios.post(urlSupabaseFinances.addTransaction, payload, {withCredentials: true})
+                    return data.status
                 } catch (err) {
                     console.log(err)
                 } finally {
