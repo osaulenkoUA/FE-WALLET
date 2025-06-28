@@ -16,4 +16,4 @@ export const updateItem =  `${BASE_URL}/finances/updateFields`
 
 export const addTransactionSupabase =  `${BASE_URL_SUPABASE}/finances`
 export const fetchCategoriesSupabase =  `${BASE_URL_SUPABASE}/categories`
-export const fetchCategoriesSupabase2 =  `${BASE_URL_SUPABASE}/categories-old`
+export const fetchCategoriesSupabase2 =  `https://wallet-be.duckdns.org/categories`
