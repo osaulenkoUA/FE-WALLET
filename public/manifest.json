@@ -1,0 +1,27 @@
+{
+  "name": "PWA Wallet Site",
+  "short_name": "Wallet ",
+  "theme_color": "#cdcdcd",
+  "background_color": "#9da3a7",
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": ".",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/128px.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "/192px.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/256px.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    }
+  ]
+}
