@@ -20,8 +20,6 @@ export interface IFinnanceItem {
 export const AnalyzeNew = () => {
     const descriptionRef = useRef(null);
 
-    // const [items, setItems] = useState<IFinnanceItem[]>([]);
-    // const [categoryies, setCategoryies] = useState<ICategory[]>([]);
     const financesStore = useFinancesStore()
     const categoryies = financesStore.category
     const items =financesStore.finances
@@ -114,12 +112,12 @@ export const AnalyzeNew = () => {
         }, 0)
     }
 
-    // const getColor = (el: any) => {
-    //     const listDates = items.filter(f => f.category === el.category).map(m => m.date)
-    //     const currDate = new Date().getDate()
-    //     const color = listDates.some(d => d.slice(0, 2) === (currDate > 10 ? currDate.toFixed() : '0' + currDate))
-    //     return color ? 'text-red' : 'text-white'
-    // }
+    const getColor = (el: any) => {
+        const listDates = items.filter(f => f.category.name === el.name).map(m => m.create_date.split("T")[0].split('-')[2])
+        const currDate = new Date().getDate()
+        const color = listDates.includes(currDate.toString())
+        return color ? 'text-red' : 'text-white'
+    }
 
 
     const handleChange = (e: { target: { value: string; }; }) => {
@@ -197,7 +195,7 @@ export const AnalyzeNew = () => {
                                 }}
                                    id={`category-${c.name}`}
                                    className={'text-gray-100 w-full p-3 text-[18px] font-bold hover:text-white transition-colors duration-300 cursor-pointer'}>{c?.name}</p>
-                                <p className={`p-3 text-[18px] font-bold text-white bg-opacity-20 rounded-lg`}>{getSummaryCategory(c.name)}</p>
+                                <p className={`p-3 text-[18px] font-bold bg-opacity-20 rounded-lg ${getColor(c)}`}>{getSummaryCategory(c.name)}</p>
                             </div>
 
                             {category === c.name && <div>

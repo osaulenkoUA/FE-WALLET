@@ -25,7 +25,6 @@ export const Analyze = () => {
 
     const [items, setItems] = useState<IFinnanceItem[]>([]);
 
-    // const [categoryies, setCategoryies] = useState<ICategory[]>([]);
     const financesStore = useFinancesStore()
     const categoryies = financesStore.category
 

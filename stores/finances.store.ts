@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {devtools, subscribeWithSelector} from 'zustand/middleware';
 import {ICategory} from "../pages"
 import axios from "axios"
-import {fetchCategoriesSupabase, urlSupabaseFinances} from "../components/helpers/endpoints"
+import {urlSupabaseFinances} from "../components/helpers/endpoints"
 
 export type paymentMethod = 'cash' | 'card'
 
@@ -57,7 +57,7 @@ const useFinancesStore = create(
             setCategories: async () => {
                 try {
                     set({loading: true})
-                    const {data} = await axios.get(fetchCategoriesSupabase, {withCredentials: true})
+                    const {data} = await axios.get(urlSupabaseFinances.getCategories, {withCredentials: true})
                     const categoriesS = data.map((el: { id: any; name: any; subcategories: { name: string }[] }) => ({
                         ...el,
                         description: el.subcategories?.map(el => el.name) ?? []
