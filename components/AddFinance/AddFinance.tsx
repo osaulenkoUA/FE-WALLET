@@ -76,7 +76,6 @@ export default function AddFinance({items}: { items: ICategory[] }) {
         }
     }
     const onHandleChangeDescrip = (e: any) => setDescription(e.target?.value)
-    console.log('ADD FINANCE')
     return (
         <div className={'p-4 pt-[42px]'}>
             <div className={'grid grid-cols-1 lg:grid-cols-3'}>

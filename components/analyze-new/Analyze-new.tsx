@@ -84,9 +84,7 @@ export const AnalyzeNew = () => {
     }
 
     const getItemsByCategory = (category: string) => {
-       const foo =  items.filter(el => el.category.name === category)
-        console.log(foo)
-        return foo
+        return items.filter(el => el.category.name === category)
     }
 
     const monthlySpending = () => {
@@ -113,8 +111,8 @@ export const AnalyzeNew = () => {
     }
 
     const getColor = (el: any) => {
-        const listDates = items.filter(f => f.category.name === el.name).map(m => m.create_date.split("T")[0].split('-')[2])
-        const currDate = new Date().getDate()
+        const listDates = items.filter(f => f.category.name === el.name).map(m => m.create_date.split("T")[0])
+        const currDate = new Date().toISOString().split('T')[0];
         const color = listDates.includes(currDate.toString())
         return color ? 'text-red' : 'text-white'
     }
