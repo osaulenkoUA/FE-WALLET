@@ -45,28 +45,22 @@ export const AnalyzeNew = () => {
 		}
 	};
 
-	// const updateFields = async (item: IFinnanceItem) => {
-	//
-	//     if (description === item.description && +amount === item.amount) {
-	//         setIsEdit('');
-	//         return;
-	//     }
-	//
-	//     try {
-	//         const data = await axios.put(updateItem, {
-	//             id: item._id,
-	//             ...(description !== item.description && {description: description}),
-	//             ...(+amount !== item.amount && {amount: +amount}),
-	//         })
-	//         if (data.status === 202) {
-	//             setIsEdit('')
-	//             const newItems = items.map(el => el._id === data.data._id ? data.data : el)
-	//             setItems(newItems)
-	//         }
-	//     } catch (err) {
-	//         console.log(err)
-	//     }
-	// }
+	const updateFields = async (item: any) => {
+		if (description === item.description && +amount === item.amount) {
+			setIsEdit("");
+			return;
+		}
+		try {
+			const payload = {
+				id: item.id,
+				...(description !== item.description && { description: description }),
+				...(+amount !== item.amount && { amount: +amount }),
+			};
+			await financesStore.updateFinance(payload);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
 	const formatDate = (isoDate: string): string => {
 		const date = new Date(isoDate);
@@ -259,8 +253,7 @@ export const AnalyzeNew = () => {
 														<div
 															className={"animate-bounce"}
 															onClick={() => {
-																// updateFields(el)
-																console.log("update");
+																updateFields(el);
 															}}
 														>
 															<IconConfirm />

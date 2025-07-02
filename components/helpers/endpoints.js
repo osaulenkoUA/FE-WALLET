@@ -12,6 +12,7 @@ export const urlSupabase = {
 };
 export const urlSupabaseFinances = {
 	addTransaction: `${BASE_URL_SUPABASE}/finances`,
+	updateTransaction: `${BASE_URL_SUPABASE}/finances-update`,
 	addCategories: `${BASE_URL_SUPABASE}/categories`,
 	getCategories: `${BASE_URL_SUPABASE}/categories`,
 	getFinances: `${BASE_URL_SUPABASE}/get-finances`,

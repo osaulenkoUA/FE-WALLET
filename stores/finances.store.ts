@@ -39,6 +39,9 @@ export type SessionState = {
 	setCategories: () => void;
 	addCategory: (name: string) => void;
 	addFinance: (data: IPayloadFinance) => Promise<number | undefined>;
+	updateFinance: (
+		data: Partial<IFinance>,
+	) => Promise<number | undefined>;
 	getFinances: (data: { month: string; year: string }) => void;
 	getFinanceGroups: () => void;
 	addFinanceGroup: (name: string) => void;
@@ -103,6 +106,21 @@ const useFinancesStore = create(
 				try {
 					const { data } = await axios.post(
 						urlSupabaseFinances.addTransaction,
+						payload,
+						{ withCredentials: true },
+					);
+					return data.status;
+				} catch (err) {
+					console.log(err);
+				} finally {
+					set({ loading: false });
+				}
+			},
+			updateFinance: async (payload): Promise<number | undefined> => {
+				set({ loading: true });
+				try {
+					const { data } = await axios.patch(
+						urlSupabaseFinances.updateTransaction,
 						payload,
 						{ withCredentials: true },
 					);
