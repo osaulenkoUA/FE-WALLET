@@ -1,6 +1,6 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { ToastContainer, type ToastOptions, toast } from "react-toastify";
+import { toast, ToastContainer, type ToastOptions } from "react-toastify";
 import type { ICategory } from "../../pages";
 import { IconCARD, IconCash } from "../assets/Icons/icon-add";
 import { CategoryItem } from "./CategoryItem";
