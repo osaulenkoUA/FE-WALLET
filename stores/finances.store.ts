@@ -1,8 +1,8 @@
+import axios from "axios";
 import { create } from "zustand";
 import { devtools, subscribeWithSelector } from "zustand/middleware";
-import { ICategory } from "../pages";
-import axios from "axios";
 import { urlSupabaseFinances } from "../components/helpers/endpoints";
+import type { ICategory } from "../pages";
 
 export type paymentMethod = "cash" | "card";
 

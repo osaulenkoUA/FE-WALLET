@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
 import date from "date-and-time";
-import { IconEdit } from "../assets/Icons/icon-edit";
-import { IconConfirm } from "../assets/Icons/icon-ok";
-import { IconCARD, IconGrivna } from "../assets/Icons/icon-add";
-import { IconMonth } from "../assets/Icons/icon-month";
+import React, { useEffect, useRef, useState } from "react";
 import { useFinancesStore } from "../../stores";
+import { IconCARD, IconGrivna } from "../assets/Icons/icon-add";
+import { IconEdit } from "../assets/Icons/icon-edit";
+import { IconMonth } from "../assets/Icons/icon-month";
+import { IconConfirm } from "../assets/Icons/icon-ok";
 
 export interface IFinnanceItem {
 	_id: string;

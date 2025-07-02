@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Spinner } from "../Spinner/Spinner";
-import date from "date-and-time";
 import axios from "axios";
-import { getOperationdByMonth, updateItem } from "../helpers/endpoints";
-import { IconEdit } from "../assets/Icons/icon-edit";
-import { IconConfirm } from "../assets/Icons/icon-ok";
-import { IconCARD, IconGrivna } from "../assets/Icons/icon-add";
-import { IconMonth } from "../assets/Icons/icon-month";
+import date from "date-and-time";
+import React, { useEffect, useRef, useState } from "react";
 import { useFinancesStore } from "../../stores";
+import { IconCARD, IconGrivna } from "../assets/Icons/icon-add";
+import { IconEdit } from "../assets/Icons/icon-edit";
+import { IconMonth } from "../assets/Icons/icon-month";
+import { IconConfirm } from "../assets/Icons/icon-ok";
+import { getOperationdByMonth, updateItem } from "../helpers/endpoints";
+import { Spinner } from "../Spinner/Spinner";
 
 export interface IFinnanceItem {
 	_id: string;

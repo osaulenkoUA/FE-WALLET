@@ -1,8 +1,8 @@
 "use client";
 
-import useAuthStore from "../../stores/auth.store";
-import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/router";
+import { type ReactNode, useEffect } from "react";
+import useAuthStore from "../../stores/auth.store";
 
 export function AuthGuard({ children }: { children: ReactNode }) {
 	const authStore = useAuthStore();

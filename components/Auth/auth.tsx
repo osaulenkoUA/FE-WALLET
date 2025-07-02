@@ -4,7 +4,7 @@ export function Auth() {
 	return (
 		<div>
 			<h2>LogIn with Google</h2>
-			<GoogleAuthButton  />
+			<GoogleAuthButton />
 		</div>
 	);
 }

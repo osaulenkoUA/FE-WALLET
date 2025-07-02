@@ -1,13 +1,13 @@
 import { useState } from "react";
 import AddFinance from "../components/AddFinance/AddFinance";
+import { AuthGuard } from "../components/AuthGuard/authGuard";
 import { Analyze } from "../components/analyze/Analyze";
+import { AnalyzeNew } from "../components/analyze-new/Analyze-new";
+import { Header } from "../components/Header/Header";
+import { Spinner } from "../components/Spinner/Spinner";
 import { Settings } from "../components/settings/Settings";
 import { useFinancesStore } from "../stores";
-import { AuthGuard } from "../components/AuthGuard/authGuard";
-import { Header } from "../components/Header/Header";
 import useAuthStore from "../stores/auth.store";
-import { Spinner } from "../components/Spinner/Spinner";
-import { AnalyzeNew } from "../components/analyze-new/Analyze-new";
 
 export interface ICategory {
 	name: string;

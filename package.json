@@ -6,9 +6,12 @@
 		"dev": "next dev -p 3001",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
-		"biome:check": "biome check .",
-		"biome:format": "biome format . --write"
+ 		"biome:format": "biome format --write",
+		"biome:lint": "biome lint --write",
+		"biome:check": "biome check --write",
+		"lint": "npx @biomejs/biome lint --write",
+		"format": "npx @biomejs/biome format --write",
+		"check": "npx @biomejs/biome check --write"
 	},
 	"dependencies": {
 		"@next/font": "13.1.1",

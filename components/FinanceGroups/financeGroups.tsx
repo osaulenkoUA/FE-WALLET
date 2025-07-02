@@ -1,5 +1,5 @@
-import { useFinancesStore } from "../../stores";
 import React, { useEffect, useState } from "react";
+import { useFinancesStore } from "../../stores";
 import useAuthStore from "../../stores/auth.store";
 
 export default function FinanceGroups() {

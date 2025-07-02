@@ -1,6 +1,6 @@
+import axios from "axios";
 import { create } from "zustand";
 import { devtools, subscribeWithSelector } from "zustand/middleware";
-import axios from "axios";
 import { urlSupabase } from "../components/helpers/endpoints";
 
 export interface IUser {

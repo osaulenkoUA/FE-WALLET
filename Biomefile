@@ -10,9 +10,8 @@
     "ignore": [],
     "attributePosition": "auto",
     "indentStyle": "tab",
-    "indentWidth": 2,
     "lineEnding": "lf",
-    "semicolons": "asNeeded",
+    "semicolons": "asNeeded"
   },
   "javascript": {
       "formatter": {

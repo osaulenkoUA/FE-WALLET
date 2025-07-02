@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Addcategory from "../AddCategory/addcategory";
-import UpdateCategory from "../UpdateCategory/updateCategory";
 import FinanceGroups from "../FinanceGroups/financeGroups";
+import UpdateCategory from "../UpdateCategory/updateCategory";
 
 export const Settings = () => {
 	const [activeTab, setActiveTab] = useState("0");

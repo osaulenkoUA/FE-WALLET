@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import { ICategory } from "../../pages";
-import { CategoryItem } from "./CategoryItem";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+import { ToastContainer, type ToastOptions, toast } from "react-toastify";
+import type { ICategory } from "../../pages";
 import { IconCARD, IconCash } from "../assets/Icons/icon-add";
-import { toast, ToastContainer, ToastOptions } from "react-toastify";
+import { CategoryItem } from "./CategoryItem";
 import "react-toastify/dist/ReactToastify.css";
 import { useFinancesStore } from "../../stores";
-import { paymentMethod } from "../../stores/finances.store";
+import type { paymentMethod } from "../../stores/finances.store";
 
 export default function AddFinance({ items }: { items: ICategory[] }) {
 	const [chosenDescription, setChosenDescription] = useState("");
