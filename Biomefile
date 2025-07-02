@@ -1,0 +1,45 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.2/schema.json",
+  "name": "fe-wallet",
+  "formatter": {
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100,
+    "enabled": true,
+    "formatWithErrors": false,
+    "ignore": [],
+    "attributePosition": "auto",
+    "indentStyle": "tab",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "semicolons": "asNeeded",
+  },
+  "javascript": {
+      "formatter": {
+        "arrowParentheses":"always",
+        "bracketSameLine": false,
+        "bracketSpacing": true,
+        "jsxQuoteStyle": "double",
+        "quoteProperties": "asNeeded",
+        "semicolons": "asNeeded",
+        "trailingCommas": "all"
+      }
+    },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "files": {
+    "ignore": [
+      "node_modules",
+      ".next",
+      "out",
+      "build",
+      "dist",
+      ".turbo",
+      "coverage"
+    ]
+  }
+}

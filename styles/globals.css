@@ -3,24 +3,24 @@
 @tailwind utilities;
 
 * {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .visually-hidden {
-    position: absolute;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-    background-color: #000000;
-    color: #ffffff;
+	position: absolute;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	border: 0;
+	background-color: #000000;
+	color: #ffffff;
 }
 
-.test{
-    margin-top: 50px;
-    padding: 50px;
-    color: #C4C4C4;
+.test {
+	margin-top: 50px;
+	padding: 50px;
+	color: #c4c4c4;
 }
