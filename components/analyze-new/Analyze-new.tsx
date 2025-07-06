@@ -56,7 +56,11 @@ export const AnalyzeNew = () => {
 				...(description !== item.description && { description: description }),
 				...(+amount !== item.amount && { amount: +amount }),
 			};
-			await financesStore.updateFinance(payload);
+			const data: number | undefined =
+				await financesStore.updateFinance(payload);
+			if (data === 201) {
+				setIsEdit("");
+			}
 		} catch (err) {
 			console.log(err);
 		}

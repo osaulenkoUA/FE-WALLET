@@ -39,9 +39,7 @@ export type SessionState = {
 	setCategories: () => void;
 	addCategory: (name: string) => void;
 	addFinance: (data: IPayloadFinance) => Promise<number | undefined>;
-	updateFinance: (
-		data: Partial<IFinance>,
-	) => Promise<number | undefined>;
+	updateFinance: (data: Partial<IFinance>) => Promise<number | undefined>;
 	getFinances: (data: { month: string; year: string }) => void;
 	getFinanceGroups: () => void;
 	addFinanceGroup: (name: string) => void;
@@ -124,6 +122,20 @@ const useFinancesStore = create(
 						payload,
 						{ withCredentials: true },
 					);
+					if (data.status === 201) {
+						const updatedFinances = get().finances.map((el) => {
+							if (el.id !== payload.id) return el;
+
+							return {
+								...el,
+								...(payload.description !== undefined && {
+									description: payload.description,
+								}),
+								...(payload.amount !== undefined && { amount: payload.amount }),
+							};
+						});
+						set({ finances: updatedFinances });
+					}
 					return data.status;
 				} catch (err) {
 					console.log(err);
