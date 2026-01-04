@@ -28,7 +28,7 @@ export const AnalyzeNew = () => {
 	const [currentMonth, setCurrentMonth] = useState(
 		+date.format(new Date(), "M"),
 	);
-	const [selectedYear, setSelectedYear] = useState(2025); // Default to 2023
+	const [selectedYear, setSelectedYear] = useState(2026); // Default to 2023
 
 	const [isEdit, setIsEdit] = useState("");
 
