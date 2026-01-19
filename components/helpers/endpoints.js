@@ -1,12 +1,15 @@
 const BASE_URL = "https://homewallet.vercel.app";
 
 // const BASE_URL_SUPABASE = process.env.NEXT_PUBLIC_BE_URL;
-const BASE_URL_SUPABASE = "https://wallet-be.duckdns.org";
+const BASE_URL_SUPABASE = "https://supabase-wallet.vercel.app";
+// const BASE_URL_SUPABASE = "http://localhost:3005";
+// const BASE_URL_LOCAL = "http://localhost:3005/api";
+const BASE_URL_VERCEL_AUTH = "https://nest-auth-six.vercel.app/api";
 export const getOperationdByMonth = `${BASE_URL}/finances/getOperationdByMonth`;
 export const updateItem = `${BASE_URL}/finances/updateFields`;
 
 export const urlSupabase = {
-	OAuthGoogle: `${BASE_URL_SUPABASE}/auth/google`,
+	OAuthGoogle: `${BASE_URL_VERCEL_AUTH}/auth/google`,
 	checkAuth: `${BASE_URL_SUPABASE}/api/auth/check`,
 	userProfile: `${BASE_URL_SUPABASE}/user-profile`,
 };

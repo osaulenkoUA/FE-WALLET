@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { useFinancesStore } from "../../stores";
 
@@ -7,10 +9,15 @@ export default function Addcategory() {
 	const onHandleAdd = (e: any) => {
 		setCat(e.target?.value);
 	};
-
+	const token = localStorage?.getItem("token") ?? "";
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
 	const onHandleSubmit = async () => {
 		try {
-			financesStore.addCategory(cat);
+			financesStore.addCategory(cat,config);
 			setCat("");
 		} catch (err) {
 			console.log(err);

@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { useFinancesStore } from "../../stores";
 import useAuthStore from "../../stores/auth.store";
@@ -5,7 +6,12 @@ import useAuthStore from "../../stores/auth.store";
 export default function FinanceGroups() {
 	const financesStore = useFinancesStore();
 	const { user, getUserProfile } = useAuthStore();
-
+	const token = localStorage?.getItem("token") ?? "";
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
 	const [groupNew, setGroupNew] = useState("");
 	const [groupIdAnotherUser, setGroupIdAnotherUser] = useState("");
 
@@ -17,22 +23,22 @@ export default function FinanceGroups() {
 	};
 
 	const onHandleAddNew = () => {
-		financesStore.addFinanceGroup(groupNew);
+		financesStore.addFinanceGroup(groupNew,config);
 		setGroupNew("");
 	};
 	const onHandleJoin = () => {
-		financesStore.joinFinanceGroup(groupIdAnotherUser);
+		financesStore.joinFinanceGroup(groupIdAnotherUser,config);
 		setGroupIdAnotherUser("");
 	};
 
 	const onAtivateGroup = async (idGroup: string) => {
-		void financesStore.activateFinanceGroup(idGroup);
-		void getUserProfile();
-		void financesStore.setCategories();
+		void financesStore.activateFinanceGroup(idGroup,config);
+		void getUserProfile(config);
+		void financesStore.setCategories(config);
 	};
 
 	useEffect(() => {
-		financesStore.getFinanceGroups();
+		financesStore.getFinanceGroups(config);
 	}, []);
 
 	return (

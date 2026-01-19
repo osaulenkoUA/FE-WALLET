@@ -17,9 +17,8 @@ export interface IUser {
 export type SessionState = {
 	user: IUser;
 	authenticated: boolean;
-	googleAuth: () => void;
-	authCheck: () => Promise<boolean>;
-	getUserProfile: () => void;
+	getUserProfile: (config: any) => void;
+	setAuth: () => void;
 };
 
 const useAuthStore = create(
@@ -27,35 +26,14 @@ const useAuthStore = create(
 		subscribeWithSelector<SessionState>((set) => ({
 			user: {} as IUser,
 			authenticated: false,
-			googleAuth: async () => {
-				try {
-					await axios.get(`https://wallet-be.duckdns.org/auth/google`, {
-						withCredentials: true,
-					});
-					// window.location.href = 'https://wallet-be.duckdns.org/auth/google'; // Прямий редирект
-				} catch (err) {
-					console.error(err);
-				}
+			setAuth: () => {
+				set({ authenticated: true });
 			},
-			authCheck: async (): Promise<boolean> => {
+			getUserProfile: async (config) => {
 				try {
-					const { data } = await axios.get(urlSupabase.checkAuth, {
-						withCredentials: true,
-					});
-					set({ user: data.user || null, authenticated: data.authenticated });
-					return data.authenticated;
-				} catch (err) {
-					console.log(err);
-					return false;
-				}
-			},
-			getUserProfile: async () => {
-				try {
-					const { data } = await axios.get(urlSupabase.userProfile, {
-						withCredentials: true,
-					});
+					const { data } = await axios.get(urlSupabase.userProfile, config);
+					console.log(data);
 					set({ user: data.user });
-					return data.authenticated;
 				} catch (err) {
 					console.log(err);
 				}

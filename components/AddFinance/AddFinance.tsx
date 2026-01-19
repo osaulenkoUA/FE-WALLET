@@ -1,3 +1,4 @@
+'use client'
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { toast, ToastContainer, type ToastOptions } from "react-toastify";
@@ -16,7 +17,12 @@ export default function AddFinance({ items }: { items: ICategory[] }) {
 	const [category, setCategory] = useState<ICategory | null>(null);
 
 	const financesStore = useFinancesStore();
-
+	const token = localStorage?.getItem("token") ?? "";
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
 	const notifyOpt: ToastOptions = {
 		position: "top-center",
 		autoClose: 500,
@@ -29,7 +35,7 @@ export default function AddFinance({ items }: { items: ICategory[] }) {
 	};
 	const getCategories = async () => {
 		try {
-			financesStore.setCategories();
+			financesStore.setCategories(config);
 		} catch (err) {
 			console.log(err);
 		}
@@ -52,7 +58,7 @@ export default function AddFinance({ items }: { items: ICategory[] }) {
 					: { description: "Інше" }),
 				amount: amount ? +amount : 0,
 				paymentMethod: payMethod,
-			});
+			},config);
 			if (data === 201) {
 				toast.success("ДОДАНО !!!", notifyOpt);
 				setDescription("");

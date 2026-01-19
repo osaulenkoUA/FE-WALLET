@@ -36,15 +36,21 @@ export type SessionState = {
 	category: ICategory[];
 	finances: IFinance[];
 	financeGroups: { id: string; name: string }[];
-	setCategories: () => void;
-	addCategory: (name: string) => void;
-	addFinance: (data: IPayloadFinance) => Promise<number | undefined>;
-	updateFinance: (data: Partial<IFinance>) => Promise<number | undefined>;
-	getFinances: (data: { month: string; year: string }) => void;
-	getFinanceGroups: () => void;
-	addFinanceGroup: (name: string) => void;
-	joinFinanceGroup: (id: string) => void;
-	activateFinanceGroup: (id: string) => void;
+	setCategories: (t: any) => void;
+	addCategory: (name: string, config: any) => void;
+	addFinance: (
+		data: IPayloadFinance,
+		config: any,
+	) => Promise<number | undefined>;
+	updateFinance: (
+		data: Partial<IFinance>,
+		config: any,
+	) => Promise<number | undefined>;
+	getFinances: (data: { month: string; year: string; config: any }) => void;
+	getFinanceGroups: (config: any) => void;
+	addFinanceGroup: (name: string, config: any) => void;
+	joinFinanceGroup: (id: string, config: any) => void;
+	activateFinanceGroup: (id: string, config: any) => void;
 };
 
 const useFinancesStore = create(
@@ -54,12 +60,13 @@ const useFinancesStore = create(
 			category: [] as ICategory[],
 			financeGroups: [],
 			finances: [] as IFinance[],
-			setCategories: async () => {
+			setCategories: async (config) => {
 				try {
 					set({ loading: true });
-					const { data } = await axios.get(urlSupabaseFinances.getCategories, {
-						withCredentials: true,
-					});
+					const { data } = await axios.get(
+						urlSupabaseFinances.getCategories,
+						config,
+					);
 					const categoriesS = data.map(
 						(el: {
 							id: any;
@@ -77,7 +84,7 @@ const useFinancesStore = create(
 					set({ loading: false });
 				}
 			},
-			addCategory: async (category: string) => {
+			addCategory: async (category: string, config) => {
 				try {
 					set({ loading: true });
 					const response = await axios.post(
@@ -85,9 +92,7 @@ const useFinancesStore = create(
 						{
 							name: category,
 						},
-						{
-							withCredentials: true,
-						},
+						config,
 					);
 					if (response.status === 200) {
 						const newCategories = [...get().category, response.data];
@@ -99,13 +104,13 @@ const useFinancesStore = create(
 					set({ loading: false });
 				}
 			},
-			addFinance: async (payload): Promise<number | undefined> => {
+			addFinance: async (payload, config): Promise<number | undefined> => {
 				set({ loading: true });
 				try {
 					const { data } = await axios.post(
 						urlSupabaseFinances.addTransaction,
 						payload,
-						{ withCredentials: true },
+						config,
 					);
 					return data.status;
 				} catch (err) {
@@ -114,13 +119,13 @@ const useFinancesStore = create(
 					set({ loading: false });
 				}
 			},
-			updateFinance: async (payload): Promise<number | undefined> => {
+			updateFinance: async (payload, config): Promise<number | undefined> => {
 				set({ loading: true });
 				try {
 					const { data } = await axios.patch(
 						urlSupabaseFinances.updateTransaction,
 						payload,
-						{ withCredentials: true },
+						config,
 					);
 					if (data.status === 201) {
 						const updatedFinances = get().finances.map((el) => {
@@ -143,7 +148,7 @@ const useFinancesStore = create(
 					set({ loading: false });
 				}
 			},
-			getFinances: async ({ year, month }) => {
+			getFinances: async ({ year, month, config }) => {
 				set({ loading: true });
 				try {
 					const { data } = await axios.post(
@@ -152,7 +157,7 @@ const useFinancesStore = create(
 							month,
 							year,
 						},
-						{ withCredentials: true },
+						config,
 					);
 					set({ finances: data });
 				} catch (err) {
@@ -161,43 +166,43 @@ const useFinancesStore = create(
 					set({ loading: false });
 				}
 			},
-			addFinanceGroup: async (name: string) => {
+			addFinanceGroup: async (name: string, config) => {
 				set({ loading: true });
 				try {
 					await axios.post(
 						urlSupabaseFinances.addFinanceGroup,
 						{ name },
-						{ withCredentials: true },
+						config,
 					);
-					get().getFinanceGroups();
+					get().getFinanceGroups(config);
 				} catch (err) {
 					console.log(err);
 				} finally {
 					set({ loading: false });
 				}
 			},
-			joinFinanceGroup: async (id: string) => {
+			joinFinanceGroup: async (id: string, config) => {
 				set({ loading: true });
 				try {
 					await axios.post(
 						urlSupabaseFinances.joinFinanceGroup,
 						{ id },
-						{ withCredentials: true },
+						config,
 					);
-					get().getFinanceGroups();
+					get().getFinanceGroups(config);
 				} catch (err) {
 					console.log(err);
 				} finally {
 					set({ loading: false });
 				}
 			},
-			activateFinanceGroup: async (id: string) => {
+			activateFinanceGroup: async (id: string, config) => {
 				set({ loading: true });
 				try {
 					await axios.patch(
 						urlSupabaseFinances.activateFinanceGroup,
 						{ id },
-						{ withCredentials: true },
+						config,
 					);
 				} catch (err) {
 					console.log(err);
@@ -205,12 +210,12 @@ const useFinancesStore = create(
 					set({ loading: false });
 				}
 			},
-			getFinanceGroups: async () => {
+			getFinanceGroups: async (config) => {
 				set({ loading: true });
 				try {
 					const { data } = await axios.get(
 						urlSupabaseFinances.getFinanceGroup,
-						{ withCredentials: true },
+						config,
 					);
 					set({ financeGroups: data.groups });
 				} catch (err) {

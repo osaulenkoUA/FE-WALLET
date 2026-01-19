@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 import date from "date-and-time";
 import React, { useEffect, useRef, useState } from "react";
@@ -40,7 +41,12 @@ export const Analyze = () => {
 
 	const [description, setDescription] = useState("");
 	const [amount, setAmount] = useState<string | number>(0);
-
+	const token = localStorage?.getItem("token") ?? "";
+	const config = {
+		headers: {
+			Authorization: `Bearer ${token}`,
+		},
+	};
 	const getFinances = async () => {
 		setLoading(true);
 		try {
@@ -51,7 +57,7 @@ export const Analyze = () => {
 
 			const month = `${currentMonth < 10 ? 0 : ""}` + currentMonth;
 			const year = selectedYear.toString();
-			financesStore.getFinances({ month, year });
+			financesStore.getFinances({ month, year, config });
 
 			setItems(data);
 			setLoading(false);

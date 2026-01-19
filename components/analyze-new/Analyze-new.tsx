@@ -1,3 +1,5 @@
+"use client";
+
 import date from "date-and-time";
 import React, { useEffect, useRef, useState } from "react";
 import { useFinancesStore } from "../../stores";
@@ -35,11 +37,11 @@ export const AnalyzeNew = () => {
 	const [description, setDescription] = useState("");
 	const [amount, setAmount] = useState<string | number>(0);
 
-	const getFinances = async () => {
+	const getFinances = async (config: any) => {
 		try {
 			const month = `${currentMonth < 10 ? 0 : ""}` + currentMonth;
 			const year = selectedYear.toString();
-			financesStore.getFinances({ month, year });
+			financesStore.getFinances({ month, year, config });
 		} catch (err) {
 			console.log(err);
 		}
@@ -56,8 +58,15 @@ export const AnalyzeNew = () => {
 				...(description !== item.description && { description: description }),
 				...(+amount !== item.amount && { amount: +amount }),
 			};
-			const data: number | undefined =
-				await financesStore.updateFinance(payload);
+			const config = {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
+				},
+			};
+			const data: number | undefined = await financesStore.updateFinance(
+				payload,
+				config,
+			);
 			if (data === 201) {
 				setIsEdit("");
 			}
@@ -74,7 +83,12 @@ export const AnalyzeNew = () => {
 		return `${day}-${month}-${year}`;
 	};
 	useEffect(() => {
-		getFinances();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`,
+			},
+		};
+		getFinances(config);
 	}, [currentMonth, selectedYear]);
 
 	const handleClickCategory = (cat: string) => {
