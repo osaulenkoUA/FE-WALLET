@@ -21,7 +21,7 @@ export default function Home() {
 
 	return (
 		<AuthGuard>
-			{<Header setActiveTab={setActiveTab} />}
+			{<Header setActiveTab={setActiveTab} activeTab={activeTab} />}
 			{activeTab === "0"  && (
 				<AddFinance items={financesStore.category} />
 			)}
