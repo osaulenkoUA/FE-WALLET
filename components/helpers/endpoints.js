@@ -5,6 +5,7 @@ const BASE_URL_SUPABASE = "https://supabase-wallet.vercel.app";
 // const BASE_URL_SUPABASE = "http://localhost:3005";
 // const BASE_URL_LOCAL = "http://localhost:3005/api";
 const BASE_URL_VERCEL_AUTH = "https://nest-auth-six.vercel.app/api";
+
 export const getOperationdByMonth = `${BASE_URL}/finances/getOperationdByMonth`;
 export const updateItem = `${BASE_URL}/finances/updateFields`;
 
